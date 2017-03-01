@@ -12,10 +12,10 @@ To run on a single test file, issue `./bin/sc tests/open/<some test>.s`
 
 Create a file called group.txt in the top level directory. This file should contain the names, student IDs, and (optionally) email addresses of everybody in your group, like this:
 <pre><code>
-  849159 Raj Reddy
-  479195 <m.hamilton@nasa.gov> Margaret Hamilton
-  849159 <flow-matic@rand.com> Grace Hopper
-  985704 <e.dijkstra@tue.nl> Edsger W. Dijkstra
+849159 Raj Reddy
+479195 <m.hamilton@nasa.gov> Margaret Hamilton
+849159 <flow-matic@rand.com> Grace Hopper
+985704 <e.dijkstra@tue.nl> Edsger W. Dijkstra
 </pre></code>
 
 Note that at least one group member must supply an email address; your pushes will be rejected otherwise. A report, containing details of the test runs, will be sent to every email address in group.txt whenever you push the repository.
