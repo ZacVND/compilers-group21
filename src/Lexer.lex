@@ -60,25 +60,18 @@ SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 Identifier = [a-zA-Z][a-zA-Z0-9_]*
 
 /* integer literals */
-DecIntegerLiteral = 0 | [1-9][0-9]*
-DecLongLiteral    = {DecIntegerLiteral} [lL]
+DecIntegerLiteral = 0 | {PosIntegerLiteral}* | "-" {PosIntegerLiteral}
 
-HexIntegerLiteral = 0 [xX] 0* {HexDigit} {1,8}
-HexLongLiteral    = 0 [xX] 0* {HexDigit} {1,16} [lL]
-HexDigit          = [0-9a-fA-F]
-
-OctIntegerLiteral = 0+ [1-3]? {OctDigit} {1,15}
-OctLongLiteral    = 0+ 1? {OctDigit} {1,21} [lL]
-OctDigit          = [0-7]
 
 /* floating point literals */
-FloatLiteral  = ({FLit1}|{FLit2}|{FLit3}) {Exponent}? [fF]
-DoubleLiteral = ({FLit1}|{FLit2}|{FLit3}) {Exponent}?
+FloatLiteral  = {PosFloatLiteral} | "-" {PosFloatLiteral}
+PosFloatLiteral = [0-9]+ \. [0-9]+
 
-FLit1    = [0-9]+ \. [0-9]*
-FLit2    = \. [0-9]+
-FLit3    = [0-9]+
-Exponent = [eE] [+-]? [0-9]+
+/* rational literals */
+RatLiteral = {PosRatLiteral} | "-" {PosRatLiteral}
+PosRatLiteral = {PosIntegerLiteral} "_" {PosIntegerLiteral} "/" {PosIntegerLiteral}
+
+PosIntegerLiteral = [1-9][0-9]*
 
 /* string and character literals */
 StringCharacter = [^\r\n\"\\]
@@ -91,22 +84,26 @@ SingleCharacter = [^\r\n\'\\]
 <YYINITIAL> {
 
   /* keywords */
-  "bool"                      { return symbol(BOOLEAN); }
-  "char"                         { return symbol(CHAR); }
+  "bool"                        { return symbol(BOOLEAN); }
+  "char"                        { return symbol(CHAR); }
   "loop"                        { return symbol(LOOP); }
-  "break"                        { return symbol(BREAK); }
-  "pool"                           { return symbol(POOL); }
-  "else"                         { return symbol(ELSE); }
-  "float"                        { return symbol(FLOAT); }
-  "int"                          { return symbol(INT); }
+  "break"                       { return symbol(BREAK); }
+  "pool"                        { return symbol(POOL); }
+  "else"                        { return symbol(ELSE); }
+  "float"                       { return symbol(FLOAT); }
+  "if"                          { return symbol(IF); }
+  "fi"                          { return symbol(FI); }
+
+  /* Keywords for Datatypes*/
+  "int"                         { return symbol(INT); }
   "rat"                         { return symbol(RAT); }
-  "if"                           { return symbol(IF); }
-  "fi"                           { return symbol(FI); }
-  "dict"                           { return symbol(DICT); }
+  "dict"                        { return symbol(DICT); }
+  "top"                         { return symbol(TOP); }
+  "seq"                         { return symbol(SEQ); }
 
   /* boolean literals */
-  "true"                         { return symbol(BOOLEAN_LITERAL, true); }
-  "false"                        { return symbol(BOOLEAN_LITERAL, false); }
+  "T"                           { return symbol(BOOLEAN_LITERAL, true); }
+  "F"                           { return symbol(BOOLEAN_LITERAL, false); }
 
   /* null literal */
   "null"                         { return symbol(NULL_LITERAL); }
@@ -147,7 +144,7 @@ SingleCharacter = [^\r\n\'\\]
   "|"                            { return symbol(OR); }
   "^"                            { return symbol(XOR); }
   "%"                            { return symbol(MOD); }
-
+  "=>"                           { return symbol(IMPLIES); }
   /* string literal */
   \"                             { yybegin(STRING); string.setLength(0); }
 
@@ -161,17 +158,8 @@ SingleCharacter = [^\r\n\'\\]
   "-2147483648"                  { return symbol(INTEGER_LITERAL, new Integer(Integer.MIN_VALUE)); }
 
   {DecIntegerLiteral}            { return symbol(INTEGER_LITERAL, new Integer(yytext())); }
-  {DecLongLiteral}               { return symbol(INTEGER_LITERAL, new Long(yytext().substring(0,yylength()-1))); }
-
-  {HexIntegerLiteral}            { return symbol(INTEGER_LITERAL, new Integer((int) parseLong(2, yylength(), 16))); }
-  {HexLongLiteral}               { return symbol(INTEGER_LITERAL, new Long(parseLong(2, yylength()-1, 16))); }
-
-  {OctIntegerLiteral}            { return symbol(INTEGER_LITERAL, new Integer((int) parseLong(0, yylength(), 8))); }
-  {OctLongLiteral}               { return symbol(INTEGER_LITERAL, new Long(parseLong(0, yylength()-1, 8))); }
 
   {FloatLiteral}                 { return symbol(FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1))); }
-  {DoubleLiteral}                { return symbol(FLOATING_POINT_LITERAL, new Double(yytext())); }
-  {DoubleLiteral}[dD]            { return symbol(FLOATING_POINT_LITERAL, new Double(yytext().substring(0,yylength()-1))); }
 
   /* comments */
   {Comment}                      { /* ignore */ }
@@ -197,8 +185,7 @@ SingleCharacter = [^\r\n\'\\]
   "\\\""                         { string.append( '\"' ); }
   "\\'"                          { string.append( '\'' ); }
   "\\\\"                         { string.append( '\\' ); }
-  \\[0-3]?{OctDigit}?{OctDigit}  { char val = (char) Integer.parseInt(yytext().substring(1),8);
-                                           string.append( val ); }
+
 
   /* error cases */
   \\.                            { throw new RuntimeException("Illegal escape sequence \""+yytext()+"\""); }
@@ -217,9 +204,6 @@ SingleCharacter = [^\r\n\'\\]
   "\\\""\'                       { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\"');}
   "\\'"\'                        { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\'');}
   "\\\\"\'                       { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\\'); }
-  \\[0-3]?{OctDigit}?{OctDigit}\' { yybegin(YYINITIAL);
-                                          int val = Integer.parseInt(yytext().substring(1,yylength()-1),8);
-                                        return symbol(CHARACTER_LITERAL, (char)val); }
 
   /* error cases */
   \\.                            { throw new RuntimeException("Illegal escape sequence \""+yytext()+"\""); }
