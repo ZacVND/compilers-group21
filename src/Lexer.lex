@@ -120,9 +120,6 @@ SingleCharacter = [^\r\n\'\\]
   /* Float Literal */
   {FloatLiteral} { return symbol("Floatconst", sym.FLOATING_POINT_LITERAL, new Float(yytext()); }
 
-  /* identifiers */
-  {Identifier}                   { return symbol("Identifier", sym.IDENTIFIER, yytext()); }
-
   /* separators & assignment */
   "("                            { return symbol("(", sym.LPAREN); }
   ")"                            { return symbol(")", sym.RPAREN); }
@@ -179,6 +176,9 @@ SingleCharacter = [^\r\n\'\\]
 
   /* whitespace */
   {WhiteSpace}                   { /* ignore */ }
+
+  /* identifiers */
+  {Identifier}                   { return symbol("Identifier", sym.IDENTIFIER, yytext()); }
 }
 
 <STRING> {
