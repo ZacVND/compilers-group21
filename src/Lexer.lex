@@ -60,9 +60,6 @@ SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 /* identifiers */
 Identifier = [a-zA-Z][a-zA-Z0-9_]*
 
-/* Literals */
-Literals = {IntLiteral} | {FloatLiteral} | {RatLiteral} | {BoolLiteral} | {NullLiteral}
-
 /* Literal Components */
 IntLiteral = 0 | {PInt} | "-" {PInt}
 FloatLiteral  = -? [0-9]+ \. [0-9]+
@@ -122,6 +119,9 @@ SingleCharacter = [^\r\n\'\\]
 
   /* Float Literal */
   {FloatLiteral} { return symbol("Floatconst", sym.FLOATING_POINT_LITERAL, new Float(yytext()); }
+
+  /* identifiers */
+  {Identifier}                   { return symbol("Identifier", sym.IDENTIFIER, yytext()); }
 
   /* separators & assignment */
   "("                            { return symbol("(", sym.LPAREN); }
@@ -221,6 +221,5 @@ SingleCharacter = [^\r\n\'\\]
 }
 
 /* error fallback */
-.|\n                             { throw new RuntimeException("Illegal character \""+yytext()+
-                                                              "\" at line "+yyline+", column "+yycolumn); }
+[^]                           { throw new RuntimeException("Illegal character \""+yytext()+"\" at line "+yyline+", column "+yycolumn); }
 
