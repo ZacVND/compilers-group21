@@ -59,6 +59,14 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 
     return result;
   }
+
+  private bool parseBool(String text) {
+    if (text.equals("T")) {
+        return true;
+    } else {
+        return false;
+    }
+  }
 %}
 
 %eofval{
@@ -79,16 +87,14 @@ SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 /* identifiers */
 Identifier = [a-zA-Z_][a-zA-Z0-9_]*
 
-/* integer literals */
+/* Number Literals */
 IntLiteral = 0 | {PInt} | "-" {PInt}
-FloatLiteral  = {PFloat} | "-" {PFloat}
-RatLiteral = {PRat1} | "-" {PRat1} | {PRat2} | "-" {PRat2}
+FloatLiteral  = -? [0-9]+ \. [0-9]+
+RatLiteral = -? {PInt} "_" {PInt} "/" {PInt} | -? {PInt} "/" {PInt}
 BoolLiteral = "T" | "F"
+NullLiteral = "null"
 
-PRat1 = {PInt} "_" {PInt} "/" {PInt}
-PRat2 = {PInt} "/" {PInt}
 PInt = [1-9][0-9]*
-PFloat = [0-9]+ \. [0-9]+
 
 /* string and character literals */
 StringCharacter = [^\r\n\"\\]
@@ -99,6 +105,10 @@ SingleCharacter = [^\r\n\'\\]
 %%
 
 <YYINITIAL> {
+
+  /* Keywords for Standard IO */
+  "read"                        { return symbol("read", READ); }
+  "print"                       { return symbol("print", PRINT}; }
 
   /* keywords for Control Flow*/
   "loop"                        { return symbol("loop", LOOP); }
@@ -122,9 +132,11 @@ SingleCharacter = [^\r\n\'\\]
   /* identifiers */
   {Identifier} { return symbol("Identifier", IDENTIFIER, yytext()); }
   /* boolean literals */
-  {BoolLiteral} { return symbol("Boolconst", BOOLCONST, new Boolean(Boolean.parseBool(yytext()))); }
+  {BoolLiteral} { return symbol("Boolconst", BOOLCONST, new Boolean(parseBool(yytext()))); }
   /* Integer Literal */
   {IntLiteral} { return symbol("Intconst", INTCONST, new Integer(Integer.parseInt(yytext()))); }
+
+  {NullLiteral} { return symbol("null", NULL); }
 
   /* HELP ! */
 //  {RatLiteral} { return symbol("Ratconst", RATCONST, new Rational}
@@ -141,7 +153,7 @@ SingleCharacter = [^\r\n\'\\]
   "]"                            { return symbol("]", RBRACK); }
   ";"                            { return symbol("semiconlon", SEMICOLON); }
   ","                            { return symbol("comma", COMMA); }
-  "="                            { return symbol("=", ASSIGN)}
+  ":="                            { return symbol(":=", ASSIGN)}
 
   /* OPERATORS */
   /* Comparative Operators */
@@ -151,6 +163,8 @@ SingleCharacter = [^\r\n\'\\]
   "<="                           { return symbol("leq", COMP, new Integer( LEQ )); }
   ">="                           { return symbol("geq", COMP, new Integer( GEQ )); }
   "!="                           { return symbol("neq", COMP, new Integer( NEQ )); }
+  "?"                            { return symbol("?", COMP, new Integer( QMARK )); }
+  "main"                         { return symbol("main", MAIN); }
 
   /* Logical Operators */
   "!"                            { return symbol("not", BUNOP); }
@@ -165,8 +179,14 @@ SingleCharacter = [^\r\n\'\\]
   "/"                            { return symbol("div", BINOP, new Integer( DIV )); }
   "^"                            { return symbol("exp", BINOP, new Integer( EXP )); }
 
-  /* Misc */
+  /* Sequence & Dictionary Syntax */
+  "in"                           { return symbol("in", IN); }
+  "::"                           { return symbol("::", COLONCOLON); }
   ":"                            { return symbol(":", COLON); }
+
+  /* Type aliasing and type definition */
+  "tdef"                         { return symbol("tdef", TDEF); }
+  "alias"                        { return symbol("alias", ALIAS); }
 
   /* string literal */
   \"                             { yybegin(STRING); string.setLength(0); }

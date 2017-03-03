@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b1fb102c-1c10-48b0-ac35-6979bcd0f9b4" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Lexer.lex" afterPath="$PROJECT_DIR$/src/Lexer.flex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Lexer.flex" afterPath="$PROJECT_DIR$/src/Lexer.flex" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,8 +31,8 @@
       <file leaf-file-name="Lexer.flex" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Lexer.flex">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="195" column="59" lean-forward="true" selection-start-line="195" selection-start-column="59" selection-end-line="195" selection-end-column="59" />
+            <state relative-caret-position="480">
+              <caret line="170" column="29" lean-forward="false" selection-start-line="170" selection-start-column="29" selection-end-line="170" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -743,12 +742,12 @@
       <option name="presentableId" value="Default" />
       <updated>1488495321979</updated>
       <workItem from="1488495326370" duration="122000" />
-      <workItem from="1488495477581" duration="3916000" />
+      <workItem from="1488495477581" duration="4712000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4038000" />
+    <option name="totallyTimeSpent" value="4834000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1680" y="-350" width="1920" height="1080" extended-state="6" />
@@ -835,8 +834,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Lexer.flex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="195" column="59" lean-forward="true" selection-start-line="195" selection-start-column="59" selection-end-line="195" selection-end-column="59" />
+        <state relative-caret-position="480">
+          <caret line="170" column="29" lean-forward="false" selection-start-line="170" selection-start-column="29" selection-end-line="170" selection-end-column="29" />
           <folding />
         </state>
       </provider>
