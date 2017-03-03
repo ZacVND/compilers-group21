@@ -7,9 +7,8 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 %class Lexer
 %cup
 %implements sym
-%unicode
-%line
 %char
+%line
 %column
 
 
@@ -19,6 +18,7 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
         this(in);
         symbolFactory = sf;
     }
+    ComplexSymbolFactory symbolFactory;
 
     private Symbol symbol(String name, int sym) {
         Location left = new Location(yyline+1, yycolumn+1, yychar);
@@ -32,7 +32,7 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
         return symbolFactory.newSymbol(name, sym, left, right, val);
     }
 
-    private Symbol symbol(String name, sym, Object val, int buflength) {
+    private Symbol symbol(String name, int sym, Object val, int buflength) {
         Location left = new Location(yyline+1, yycolumn+yylength()-buflength, yychar+yylength()-buflength);
         Location right = new Location(yyline+1, yycolumn+yylength(), yychar+yylength());
         return symbolFactory.newSymbol(name, sym, left, right, val);
@@ -60,7 +60,7 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
     return result;
   }
 
-  private bool parseBool(String text) {
+  private boolean parseBool(String text) {
     if (text.equals("T")) {
         return true;
     } else {
@@ -70,7 +70,7 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 %}
 
 %eofval{
-     return symbolFactory.newSymbol("EOF", EOF, new Location(yyline+1,yycolumn+1,yychar), new Location(yyline+1,yycolumn+1,yychar+1));
+     return symbolFactory.newSymbol("EOF", sym.EOF, new Location(yyline+1,yycolumn+1,yychar), new Location(yyline+1,yycolumn+1,yychar+1));
 %eofval}
 
 /* main character classes */
@@ -107,86 +107,86 @@ SingleCharacter = [^\r\n\'\\]
 <YYINITIAL> {
 
   /* Keywords for Standard IO */
-  "read"                        { return symbol("read", READ); }
-  "print"                       { return symbol("print", PRINT); }
+  "read"                        { return symbol("read", sym.READ); }
+  "print"                       { return symbol("print", sym.PRINT); }
 
   /* keywords for Control Flow*/
-  "loop"                        { return symbol("loop", LOOP); }
-  "pool"                        { return symbol("pool", POOL); }
-  "break"                       { return symbol("break", BREAK); }
-  "if"                          { return symbol("if", IF); }
-  "fi"                          { return symbol("fi", FI); }
-  "else"                        { return symbol("else", ELSE); }
+  "loop"                        { return symbol("loop", sym.LOOP); }
+  "pool"                        { return symbol("pool", sym.POOL); }
+  "break"                       { return symbol("break", sym.BREAK); }
+  "if"                          { return symbol("if", sym.IF); }
+  "fi"                          { return symbol("fi", sym.FI); }
+  "else"                        { return symbol("else", sym.ELSE); }
 
   /* Keywords for Datatypes*/
-  "top"                         { return symbol("top", TYPE, new Integer( TOP )); }
-  "int"                         { return symbol("int", TYPE, new Integer( INT )); }
-  "rat"                         { return symbol("rat", TYPE, new Integer( RAT )); }
-  "float"                       { return symbol("float", TYPE, new Integer( FLOAT )); }
-  "bool"                        { return symbol("bool", TYPE, new Integer( BOOL )); }
-  "char"                        { return symbol("char", TYPE, new Integer( CHAR )); }
-  "seq"                         { return symbol("seq", TYPE, new Integer( SEQ )); }
-  "dict"                        { return symbol("dict", TYPE, new Integer( DICT )); }
+  "top"                         { return symbol("top", sym.TYPE, new Integer( sym.TOP )); }
+  "int"                         { return symbol("int", sym.TYPE, new Integer( sym.INT )); }
+  "rat"                         { return symbol("rat", sym.TYPE, new Integer( sym.RAT )); }
+  "float"                       { return symbol("float", sym.TYPE, new Integer( sym.FLOAT )); }
+  "boolean"                     { return symbol("bool", sym.TYPE, new Integer( sym.BOOLEAN )); }
+  "char"                        { return symbol("char", sym.TYPE, new Integer( sym.CHAR )); }
+  "seq"                         { return symbol("seq", sym.TYPE, new Integer( sym.SEQ )); }
+  "dict"                        { return symbol("dict", sym.TYPE, new Integer( sym.DICT )); }
 
   /* LITERALS */
   /* identifiers */
-  {Identifier} { return symbol("Identifier", IDENTIFIER, yytext()); }
+  {Identifier} { return symbol("Identifier", sym.IDENTIFIER, yytext()); }
   /* boolean literals */
-  {BoolLiteral} { return symbol("Boolconst", BOOLCONST, new Boolean(parseBool(yytext()))); }
+  {BoolLiteral} { return symbol("Boolconst", sym.BOOLEAN_LITERAL, new Boolean(parseBool(yytext()))); }
   /* Integer Literal */
-  {IntLiteral} { return symbol("Intconst", INTCONST, new Integer(Integer.parseInt(yytext()))); }
+  {IntLiteral} { return symbol("Intconst", sym.INTEGER_LITERAL, new Integer(Integer.parseInt(yytext()))); }
 
-  {NullLiteral} { return symbol("null", NULL); }
+  {NullLiteral} { return symbol("null", sym.NULL_LITERAL:); }
 
   /* HELP ! */
-//  {RatLiteral} { return symbol("Ratconst", RATCONST, new Rational}
+//  {RatLiteral} { return symbol("Ratconst", sym.RAT_LITERAL, new Rational}
 
   /* Float Literal */
-  {FloatLiteral} { return symbol(FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1))); }
+  {FloatLiteral} { return symbol("Floatconst", sym.FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1))); }
 
   /* separators & assignment */
-  "("                            { return symbol("(", LPAREN); }
-  ")"                            { return symbol(")", RPAREN); }
-  "{"                            { return symbol("{", LBRACE); }
-  "}"                            { return symbol("}", RBRACE); }
-  "["                            { return symbol("[", LBRACK); }
-  "]"                            { return symbol("]", RBRACK); }
-  ";"                            { return symbol("semiconlon", SEMICOLON); }
-  ","                            { return symbol("comma", COMMA); }
-  ":="                            { return symbol(":=", ASSIGN); }
+  "("                            { return symbol("(", sym.LPAREN); }
+  ")"                            { return symbol(")", sym.RPAREN); }
+  "{"                            { return symbol("{", sym.LBRACE); }
+  "}"                            { return symbol("}", sym.RBRACE); }
+  "["                            { return symbol("[", sym.LBRACK); }
+  "]"                            { return symbol("]", sym.RBRACK); }
+  ";"                            { return symbol("semiconlon", sym.SEMICOLON); }
+  ","                            { return symbol("comma", sym.COMMA); }
+  ":="                            { return symbol(":=", sym.ASSIGN); }
 
   /* OPERATORS */
   /* Comparative Operators */
-  ">"                            { return symbol("gt", COMP, new Integer( GT )); }
-  "<"                            { return symbol("lt", COMP, new Integer( LT )); }
-  "=="                           { return symbol("eq", COMP, new Integer( EQ )); }
-  "<="                           { return symbol("leq", COMP, new Integer( LEQ )); }
-  ">="                           { return symbol("geq", COMP, new Integer( GEQ )); }
-  "!="                           { return symbol("neq", COMP, new Integer( NEQ )); }
-  "?"                            { return symbol("?", COMP, new Integer( QMARK )); }
-  "main"                         { return symbol("main", MAIN); }
+  ">"                            { return symbol("gt", sym.COMP, new Integer( sym.GT )); }
+  "<"                            { return symbol("lt", sym.COMP, new Integer( sym.LT )); }
+  "=="                           { return symbol("eq", sym.COMP, new Integer( sym.EQ )); }
+  "<="                           { return symbol("leq", sym.COMP, new Integer( sym.LEQ )); }
+  ">="                           { return symbol("geq", sym.COMP, new Integer( sym.GEQ )); }
+  "!="                           { return symbol("neq", sym.COMP, new Integer( sym.NEQ )); }
+  "?"                            { return symbol("?", sym.COMP, new Integer( sym.QMARK )); }
+  "main"                         { return symbol("main", sym.MAIN); }
 
   /* Logical Operators */
-  "!"                            { return symbol("not", BUNOP); }
-  "&&"                           { return symbol("and", BBINOP, new Integer( AND )); }
-  "||"                           { return symbol("or", BBINOP, new Integer( OR )); }
-  "=>"                           { return symbol("implies", BBINOP, new Integer( IMPLICATION)); }
+  "!"                            { return symbol("not", sym.BUNOP); }
+  "&&"                           { return symbol("and", sym.BBINOP, new Integer( sym.AND )); }
+  "||"                           { return symbol("or", sym.BBINOP, new Integer( sym.OR )); }
+  "=>"                           { return symbol("implies", sym.BBINOP, new Integer( sym.IMPLICATION)); }
 
   /* Binary Operators */
-  "+"                            { return symbol("plus", BINOP, new Integer( PLUS )); }
-  "-"                            { return symbol("minus", BINOP, new Integer( MINUS )); }
-  "*"                            { return symbol("mult", BINOP, new Integer( MULT )); }
-  "/"                            { return symbol("div", BINOP, new Integer( DIV )); }
-  "^"                            { return symbol("exp", BINOP, new Integer( EXP )); }
+  "+"                            { return symbol("plus", sym.BINOP, new Integer( sym.PLUS )); }
+  "-"                            { return symbol("minus", sym.BINOP, new Integer( sym.MINUS )); }
+  "*"                            { return symbol("mult", sym.BINOP, new Integer( sym.MULT )); }
+  "/"                            { return symbol("div", sym.BINOP, new Integer( sym.DIV )); }
+  "^"                            { return symbol("exp", sym.BINOP, new Integer( sym.EXP )); }
 
   /* Sequence & Dictionary Syntax */
-  "in"                           { return symbol("in", IN); }
-  "::"                           { return symbol("::", COLONCOLON); }
-  ":"                            { return symbol(":", COLON); }
+  "in"                           { return symbol("in", sym.IN); }
+  "::"                           { return symbol("::", sym.COLONCOLON); }
+  ":"                            { return symbol(":", sym.COLON); }
 
   /* Type aliasing and type definition */
-  "tdef"                         { return symbol("tdef", TDEF); }
-  "alias"                        { return symbol("alias", ALIAS); }
+  "tdef"                         { return symbol("tdef", sym.TDEF); }
+  "alias"                        { return symbol("alias", sym.ALIAS); }
 
   /* string literal */
   \"                             { yybegin(STRING); string.setLength(0); }
@@ -202,7 +202,7 @@ SingleCharacter = [^\r\n\'\\]
 }
 
 <STRING> {
-  \"                             { yybegin(YYINITIAL); return symbol(STRING_LITERAL, string.toString()); }
+  \"                             { yybegin(YYINITIAL); return symbol("string", sym.STRING_LITERAL, string.toString(), string.length()); }
 
   {StringCharacter}+             { string.append( yytext() ); }
 
@@ -223,17 +223,17 @@ SingleCharacter = [^\r\n\'\\]
 }
 
 <CHARLITERAL> {
-  {SingleCharacter}\'            { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, yytext().charAt(0)); }
+  {SingleCharacter}\'            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, yytext().charAt(0)); }
 
   /* escape sequences */
-  "\\b"\'                        { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\b');}
-  "\\t"\'                        { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\t');}
-  "\\n"\'                        { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\n');}
-  "\\f"\'                        { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\f');}
-  "\\r"\'                        { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\r');}
-  "\\\""\'                       { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\"');}
-  "\\'"\'                        { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\'');}
-  "\\\\"\'                       { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\\'); }
+  "\\b"\'                        { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\b');}
+  "\\t"\'                        { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\t');}
+  "\\n"\'                        { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\n');}
+  "\\f"\'                        { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\f');}
+  "\\r"\'                        { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\r');}
+  "\\\""\'                       { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\"');}
+  "\\'"\'                        { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\'');}
+  "\\\\"\'                       { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\\'); }
 
   /* error cases */
   \\.                            { throw new RuntimeException("Illegal escape sequence \""+yytext()+"\""); }

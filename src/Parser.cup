@@ -1,5 +1,16 @@
 import java_cup.runtime.*;
 
+// IO
+terminal READ, PRINT;
+
+terminal TYPE;
+terminal COMP;
+terminal QMARK;
+terminal BINOP;
+terminal BBINOP;
+terminal BUNOP;
+terminal IN;
+
 terminal LOOP;
 terminal BREAK;
 terminal POOL;
@@ -28,6 +39,7 @@ terminal INTEGER_LITERAL;
 terminal FLOATING_POINT_LITERAL;
 terminal RATIONAL_LITERAL;
 terminal STRING_LITERAL;
+terminal CHARACTER_LITERAL;
 
 terminal LPAREN;
 terminal RPAREN;
@@ -59,6 +71,7 @@ terminal MINUS;
 terminal MULT;
 terminal DIV;
 terminal XOR;
+terminal EXP;
 
 non terminal stmt, cond, expr, term, type, dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals;
 stmt ::= SEMICOLON
