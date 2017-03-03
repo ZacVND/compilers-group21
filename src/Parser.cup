@@ -15,86 +15,72 @@ parser code {:
   }
 :};
 
+terminal IN;  // What is this supposed to do ????
+
 // IO
 terminal READ, PRINT;
 
+// Conditional Statements
+terminal LOOP, POOL;
+terminal IF, FI;
+terminal BREAK, ELSE;  // Conditional Statements - Control
+terminal BINOP, BBINOP, BUNOP; // Logical Comparators - Type
+
+// Logical Operators
+terminal EQ, GT, LT, LEQ, GEQ, NEQ;
+terminal NOT, AND, OR, IMPLICATION;
 terminal TYPE;
 terminal COMP;
 terminal QMARK;
-terminal BINOP;
-terminal BBINOP;
-terminal BUNOP;
-terminal IN;
 
-terminal LOOP;
-terminal BREAK;
-terminal POOL;
-terminal ELSE;
-terminal IF;
-terminal FI;
+// Types
+terminal INT, FLOAT, RAT;
+terminal SEQ, DICT;
+terminal BOOLEAN;
+terminal CHAR;
 terminal TOP;
-terminal TDEF;
-terminal FDEF;
+
+// Definitions
+terminal TDEF, FDEG; // Define type & functions
 terminal ALIAS;
 terminal MAIN;
 terminal IDENTIFIER;
+terminal ASSIGN;
 
-terminal INT;
-terminal FLOAT;
-terminal RAT;
-terminal BOOLEAN;
-terminal CHAR;
-terminal DICT;
-terminal SEQ;
-
+// Literals
 terminal BOOLEAN_LITERAL;
 terminal NULL_LITERAL;
-terminal CHARLITERAL;
-terminal INTEGER_LITERAL;
-terminal FLOATING_POINT_LITERAL;
-terminal RATIONAL_LITERAL;
-terminal STRING_LITERAL;
-terminal CHARACTER_LITERAL;
+terminal INTEGER_LITERAL, FLOATING_POINT_LITERAL, RATIONAL_LITERAL;  // Numbers
+terminal STRING_LITERAL, CHARACTER_LITERAL;  // String & Char
 
-terminal LPAREN;
-terminal RPAREN;
-terminal LBRACE;
-terminal RBRACE;
-terminal LBRACK;
-terminal RBRACK;
+// Separators
+terminal LPAREN, RPAREN, LBRACE, RBRACE, LBARACK, RBRACK;
 terminal SEMICOLON;
 terminal COMMA;
 terminal DOT;
 
-terminal EQ;
-terminal ASSIGN;
-terminal GT;
-terminal LT;
-terminal COLON;
-terminal COLONCOLON;
-terminal LEQ;
-terminal GEQ;
-terminal NEQ;
+// Dictionary & Sequence
+terminal COLON, COLONCOLON;
 
-terminal NOT;
-terminal AND;
-terminal OR;
-terminal IMPLICATION;
+// Operators
+terminal PLUS, MINUS, MULT, DIV, XOR, EXP;
 
-terminal PLUS;
-terminal MINUS;
-terminal MULT;
-terminal DIV;
-terminal XOR;
-terminal EXP;
-
-non terminal stmt, cond, expr, term, type, dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals;
+non terminal cond, con_inner;
+non terminal stmt, expr, term, type, dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals;
 non terminal input_output_literal;
 
 stmt ::= SEMICOLON
     | IDENTIFIER ASSIGN expr SEMICOLON
     | TDEF IDENTIFIER SEMICOLON
     | ALIAS type IDENTIFIER SEMICOLON
+    ;
+
+cond_literal ::= IF cond stmt FI
+    | IF cond stmt ctrl_else FI
+    ;
+
+ctrl_else ::= ELSE LBRACE stmt RBRACE
+    | cond_control_flow_else cond_control_flow_else
     ;
 
 cond ::= BOOLEAN_LITERAL

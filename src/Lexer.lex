@@ -115,6 +115,7 @@ SingleCharacter = [^\r\n\'\\]
   "break"                       { return symbol("break", sym.BREAK); }
   "if"                          { return symbol("if", sym.IF); }
   "fi"                          { return symbol("fi", sym.FI); }
+  "then"                        { return symbol("THEN", symTHEN); }
   "else"                        { return symbol("else", sym.ELSE); }
 
   /* Keywords for Datatypes*/
@@ -191,7 +192,7 @@ SingleCharacter = [^\r\n\'\\]
   \"                             { yybegin(STRING); string.setLength(0); }
 
   /* character literal */
-  \'                             { yybegin(CHARLITERAL); }
+  \'                             { yybegin(CHAR); }
 
   /* comments */
   {Comment}                      { /* ignore */ }
@@ -221,7 +222,7 @@ SingleCharacter = [^\r\n\'\\]
   {LineTerminator}               { throw new RuntimeException("Unterminated string at end of line"); }
 }
 
-<CHARLITERAL> {
+<CHAR> {
   {SingleCharacter}\'            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, yytext().charAt(0)); }
 
   /* escape sequences */
