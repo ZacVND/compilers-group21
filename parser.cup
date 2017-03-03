@@ -71,14 +71,15 @@ cond ::= BOOLEAN_LITERAL
     | expr EQ expr
     | expr GT expr
     | expr LT expr
-    | expr LTEQ expr
-    | expr GTEQ expr
-    | expr NOTEQ expr
+    | expr LEQ expr
+    | expr GEQ expr
+    | expr NEQ expr
     | NOT cond
-    | cond ANDAND cond
-    | cond OROR cond
+    | cond AND cond
+    | cond OR cond
     | cond IMPLICATION cond
     ;
+
 expr ::= expr PLUS term
     | expr MINUS term
     | expr MULT term

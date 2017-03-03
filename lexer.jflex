@@ -1,58 +1,100 @@
-import java_cup.runtime.*;
+import java_cup.runtime.Symbol;
+import java_cup.runtime.ComplexSymbolFactory;
+import java_cup.runtime.ComplexSymbolFactory.Location;
 
 %%
-
 %public
 %class Lexer
+%cup
 %implements sym
-
 %unicode
-
 %line
+%char
 %column
 
-%cup
-%cupdebug
 
 %{
-  StringBuilder string = new StringBuilder();
+    StringBuffer string = new StringBuffer();
+    public Lexer(java.io.Reader in, ComplexSymbolFactory sf){
+        this(in);
+        symbolFactory = sf;
+    }
 
-  private Symbol symbol(int type) {
-    return new JavaSymbol(type, yyline+1, yycolumn+1);
+    private Symbol symbol(String name, int sym) {
+        Location left = new Location(yyline+1, yycolumn+1, yychar);
+        Location right = new Location(yyline+1, yycolumn+yylength(), yychar+yylength());
+        return symbolFactory.newSymbol(name, sym, left, right);
+    }
+
+    private Symbol symbol(String name, int sym, Object val) {
+        Location left = new Location(yyline+1, yycolumn+1, yychar);
+        Location right = new Location(yyline+1, yycolumn+yylength(), yychar+yylength());
+        return symbolFactory.newSymbol(name, sym, left, right, val);
+    }
+
+    private Symbol symbol(String name, sym, Object val, int buflength) {
+        Location left = new Location(yyline+1, yycolumn+yylength()-buflength, yychar+yylength()-buflength);
+        Location right = new Location(yyline+1, yycolumn+yylength(), yychar+yylength());
+        return symbolFactory.newSymbol(name, sym, left, right, val);
+    }
+
+    private void error(String message) {
+        System.out.println("Error at line " + (yyline+1) + ", column " + (yycolumn+1) + " : " + message);
+    }
+
+  /**
+   * assumes correct representation of a long value for
+   * specified radix in scanner buffer from <code>start</code>
+   * to <code>end</code>
+   */
+  private long parseRat(int start, int end, int radix) {
+    long result = 0;
+    long digit;
+
+    for (int i = start; i < end; i++) {
+      digit  = Character.digit(yycharat(i),radix);
+      result*= radix;
+      result+= digit;
+    }
+
+    return result;
   }
 
-  private Symbol symbol(int type, Object value) {
-    return new JavaSymbol(type, yyline+1, yycolumn+1, value);
+  private bool parseBool(String text) {
+    if (text.equals("T")) {
+        return true;
+    } else {
+        return false;
+    }
   }
 %}
+
+%eofval{
+     return symbolFactory.newSymbol("EOF", EOF, new Location(yyline+1,yycolumn+1,yychar), new Location(yyline+1,yycolumn+1,yychar+1));
+%eofval}
 
 /* main character classes */
 LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
-WhiteSpace     = {LineTerminator} | [ \t\f]
+WhiteSpace = {LineTerminator} | [ \t\f]
 
 /* comments */
 Comment = {MultiLineComment} | {SingleLineComment}
 
-MultiLineComment = "/#" ~"#/" | "/#" "#"+ "/"
-SingleLineComment = "#" {InputCharacter}* {LineTerminator}? // Comment can be the last line of the file, without line terminator.
+MultiLineComment = "/#" [^#] ~"#/" | "/#" "#"+ "/"
+SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 
 /* identifiers */
-Identifier = [a-zA-Z][a-zA-Z0-9_]*
+Identifier = [a-zA-Z_][a-zA-Z0-9_]*
 
-/* integer literals */
-IntegerLiteral = 0 | -? [1-9][0-9]*
+/* Number Literals */
+IntLiteral = 0 | {PInt} | "-" {PInt}
+FloatLiteral  = -? [0-9]+ \. [0-9]+
+RatLiteral = -? {PInt} "_" {PInt} "/" {PInt} | -? {PInt} "/" {PInt}
+BoolLiteral = "T" | "F"
+NullLiteral = "null"
 
-/* floating point literals */
-FloatLiteral = -? ({FLit1}|{FLit2}|{FLit3}) {Exponent}?
-
-FLit1    = [0-9]+ \. [0-9]*
-FLit2    = \. [0-9]+
-FLit3    = [0-9]+
-Exponent = [eE] [+-]? [0-9]+
-
-/* rational literals */
-RationalLiteral = -? [1-9]
+PInt = [1-9][0-9]*
 
 /* string and character literals */
 StringCharacter = [^\r\n\"\\]
@@ -64,67 +106,87 @@ SingleCharacter = [^\r\n\'\\]
 
 <YYINITIAL> {
 
-  /* keywords */
-  "loop"                        { return symbol(LOOP); }
-  "break"                        { return symbol(BREAK); }
-  "pool"                           { return symbol(POOL); }
-  "else"                         { return symbol(ELSE); }
-  "if"                           { return symbol(IF); }
-  "fi"                           { return symbol(FI); }
-  "top"                           { return symbol(TOP); }
-  "tdef"                           { return symbol(TDEF); }
-  "fdef"                           { return symbol(FDEF); }
-  "alias"                           { return symbol(ALIAS); }
-  "main"                           { return symbol(MAIN); }
+  /* Keywords for Standard IO */
+  "read"                        { return symbol("read", READ); }
+  "print"                       { return symbol("print", PRINT}; }
 
-  /* data types */
-  "int"                          { return symbol(INT); }
-  "float"                        { return symbol(FLOAT); }
-  "rat"                         { return symbol(RAT); }
-  "bool"                      { return symbol(BOOLEAN); }
-  "char"                         { return symbol(CHAR); }
-  "dict"                           { return symbol(DICT); }
-  "seq"                           { return symbol(SEQ); }
+  /* keywords for Control Flow*/
+  "loop"                        { return symbol("loop", LOOP); }
+  "pool"                        { return symbol("pool", POOL); }
+  "break"                       { return symbol("break", BREAK); }
+  "if"                          { return symbol("if", IF); }
+  "fi"                          { return symbol("fi", FI); }
+  "else"                        { return symbol("else", ELSE); }
 
+  /* Keywords for Datatypes*/
+  "top"                         { return symbol("top", TYPE, new Integer( TOP )); }
+  "int"                         { return symbol("int", TYPE, new Integer( INT )); }
+  "rat"                         { return symbol("rat", TYPE, new Integer( RAT )); }
+  "float"                       { return symbol("float", TYPE, new Integer( FLOAT )); }
+  "bool"                        { return symbol("bool", TYPE, new Integer( BOOL )); }
+  "char"                        { return symbol("char", TYPE, new Integer( CHAR )); }
+  "seq"                         { return symbol("seq", TYPE, new Integer( SEQ )); }
+  "dict"                        { return symbol("dict", TYPE, new Integer( DICT )); }
+
+  /* LITERALS */
+  /* identifiers */
+  {Identifier} { return symbol("Identifier", IDENTIFIER, yytext()); }
   /* boolean literals */
-  "T"                         { return symbol(BOOLEAN_LITERAL, true); }
-  "F"                        { return symbol(BOOLEAN_LITERAL, false); }
+  {BoolLiteral} { return symbol("Boolconst", BOOLCONST, new Boolean(parseBool(yytext()))); }
+  /* Integer Literal */
+  {IntLiteral} { return symbol("Intconst", INTCONST, new Integer(Integer.parseInt(yytext()))); }
 
-  /* null literal */
-  "null"                         { return symbol(NULL_LITERAL); }
+  {NullLiteral} { return symbol("null", NULL); }
 
-  /* separators */
-  "("                            { return symbol(LPAREN); }
-  ")"                            { return symbol(RPAREN); }
-  "{"                            { return symbol(LBRACE); }
-  "}"                            { return symbol(RBRACE); }
-  "["                            { return symbol(LBRACK); }
-  "]"                            { return symbol(RBRACK); }
-  ";"                            { return symbol(SEMICOLON); }
-  ","                            { return symbol(COMMA); }
-  "."                            { return symbol(DOT); }
+  /* HELP ! */
+//  {RatLiteral} { return symbol("Ratconst", RATCONST, new Rational}
 
-  /* operators */
-  "="                            { return symbol(EQ); }
-  ":="                            { return symbol(ASSIGN); }
-  ">"                            { return symbol(GT); }
-  "<"                            { return symbol(LT); }
-  ":"                            { return symbol(COLON); }
-  "::"                            { return symbol(COLONCOLON); }
-  "<="                           { return symbol(LTEQ); }
-  ">="                           { return symbol(GTEQ); }
-  "!="                           { return symbol(NOTEQ); }
+  /* Float Literal */
+  {FloatLiteral} { return symbol(FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1))); }
 
-  "!"                            { return symbol(NOT); }
-  "&&"                           { return symbol(ANDAND); }
-  "||"                           { return symbol(OROR); }
-  "=>"                            { return symbol(IMPLICATION); }
+  /* separators & assignment */
+  "("                            { return symbol("(", LPAREN); }
+  ")"                            { return symbol(")", RPAREN); }
+  "{"                            { return symbol("{", LBRACE); }
+  "}"                            { return symbol("}", RBRACE); }
+  "["                            { return symbol("[", LBRACK); }
+  "]"                            { return symbol("]", RBRACK); }
+  ";"                            { return symbol("semiconlon", SEMICOLON); }
+  ","                            { return symbol("comma", COMMA); }
+  ":="                            { return symbol(":=", ASSIGN)}
 
-  "+"                            { return symbol(PLUS); }
-  "-"                            { return symbol(MINUS); }
-  "*"                            { return symbol(MULT); }
-  "/"                            { return symbol(DIV); }
-  "^"                            { return symbol(XOR); }
+  /* OPERATORS */
+  /* Comparative Operators */
+  ">"                            { return symbol("gt", COMP, new Integer( GT )); }
+  "<"                            { return symbol("lt", COMP, new Integer( LT )); }
+  "=="                           { return symbol("eq", COMP, new Integer( EQ )); }
+  "<="                           { return symbol("leq", COMP, new Integer( LEQ )); }
+  ">="                           { return symbol("geq", COMP, new Integer( GEQ )); }
+  "!="                           { return symbol("neq", COMP, new Integer( NEQ )); }
+  "?"                            { return symbol("?", COMP, new Integer( QMARK )); }
+  "main"                         { return symbol("main", MAIN); }
+
+  /* Logical Operators */
+  "!"                            { return symbol("not", BUNOP); }
+  "&&"                           { return symbol("and", BBINOP, new Integer( AND )); }
+  "||"                           { return symbol("or", BBINOP, new Integer( OR )); }
+  "=>"                           { return symbol("implies", BBINOP, new Integer( IMPLICATION)); }
+
+  /* Binary Operators */
+  "+"                            { return symbol("plus", BINOP, new Integer( PLUS )); }
+  "-"                            { return symbol("minus", BINOP, new Integer( MINUS )); }
+  "*"                            { return symbol("mult", BINOP, new Integer( MULT )); }
+  "/"                            { return symbol("div", BINOP, new Integer( DIV )); }
+  "^"                            { return symbol("exp", BINOP, new Integer( EXP )); }
+
+  /* Sequence & Dictionary Syntax */
+  "in"                           { return symbol("in", IN); }
+  "::"                           { return symbol("::", COLONCOLON); }
+  ":"                            { return symbol(":", COLON); }
+
+  /* Type aliasing and type definition */
+  "tdef"                         { return symbol("tdef", TDEF); }
+  "alias"                        { return symbol("alias", ALIAS); }
 
   /* string literal */
   \"                             { yybegin(STRING); string.setLength(0); }
@@ -132,24 +194,11 @@ SingleCharacter = [^\r\n\'\\]
   /* character literal */
   \'                             { yybegin(CHARLITERAL); }
 
-  /* numeric literals */
-
-  /* This is matched together with the minus, because the number is too big to
-     be represented by a positive integer. */
-  "-2147483648"                  { return symbol(INTEGER_LITERAL, new Integer(Integer.MIN_VALUE)); }
-
-  {IntegerLiteral}            { return symbol(INTEGER_LITERAL, new Integer(yytext())); }
-  {FloatLiteral}                { return symbol(FLOATING_POINT_LITERAL, new Float(yytext())); }
-  {RationalLiteral}                { return symbol(RATIONAL_LITERAL, new Double(yytext())); }
-
   /* comments */
   {Comment}                      { /* ignore */ }
 
   /* whitespace */
   {WhiteSpace}                   { /* ignore */ }
-
-  /* identifiers */
-  {Identifier}                   { return symbol(IDENTIFIER, yytext()); }
 }
 
 <STRING> {
@@ -166,7 +215,7 @@ SingleCharacter = [^\r\n\'\\]
   "\\\""                         { string.append( '\"' ); }
   "\\'"                          { string.append( '\'' ); }
   "\\\\"                         { string.append( '\\' ); }
-                                           string.append( val ); }
+
 
   /* error cases */
   \\.                            { throw new RuntimeException("Illegal escape sequence \""+yytext()+"\""); }
@@ -185,9 +234,6 @@ SingleCharacter = [^\r\n\'\\]
   "\\\""\'                       { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\"');}
   "\\'"\'                        { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\'');}
   "\\\\"\'                       { yybegin(YYINITIAL); return symbol(CHARACTER_LITERAL, '\\'); }
-  \\[0-3]?{OctDigit}?{OctDigit}\' { yybegin(YYINITIAL);
-                                          int val = Integer.parseInt(yytext().substring(1,yylength()-1),8);
-                                        return symbol(CHARACTER_LITERAL, (char)val); }
 
   /* error cases */
   \\.                            { throw new RuntimeException("Illegal escape sequence \""+yytext()+"\""); }
@@ -197,4 +243,4 @@ SingleCharacter = [^\r\n\'\\]
 /* error fallback */
 .|\n                             { throw new RuntimeException("Illegal character \""+yytext()+
                                                               "\" at line "+yyline+", column "+yycolumn); }
-<<EOF>>                          { return symbol(EOF); }
+
