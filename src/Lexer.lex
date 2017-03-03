@@ -40,32 +40,6 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
     private void error(String message) {
         System.out.println("Error at line " + (yyline+1) + ", column " + (yycolumn+1) + " : " + message);
     }
-
-  /**
-   * assumes correct representation of a long value for
-   * specified radix in scanner buffer from <code>start</code>
-   * to <code>end</code>
-   */
-  private long parseRat(int start, int end, int radix) {
-    long result = 0;
-    long digit;
-
-    for (int i = start; i < end; i++) {
-      digit  = Character.digit(yycharat(i),radix);
-      result*= radix;
-      result+= digit;
-    }
-
-    return result;
-  }
-
-  private boolean parseBool(String text) {
-    if (text.equals("T")) {
-        return true;
-    } else {
-        return false;
-    }
-  }
 %}
 
 %eofval{
@@ -84,9 +58,12 @@ MultiLineComment = "/#" [^#] ~"#/" | "/#" "#"+ "/"
 SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 
 /* identifiers */
-Identifier = [a-zA-Z_][a-zA-Z0-9_]*
+Identifier = [a-zA-Z][a-zA-Z0-9_]*
 
-/* Number Literals */
+/* Literals */
+Literals = {IntLiteral} | {FloatLiteral} | {RatLiteral} | {BoolLiteral} | {NullLiteral}
+
+/* Literal Components */
 IntLiteral = 0 | {PInt} | "-" {PInt}
 FloatLiteral  = -? [0-9]+ \. [0-9]+
 RatLiteral = -? {PInt} "_" {PInt} "/" {PInt} | -? {PInt} "/" {PInt}
@@ -99,7 +76,7 @@ PInt = [1-9][0-9]*
 StringCharacter = [^\r\n\"\\]
 SingleCharacter = [^\r\n\'\\]
 
-%state STRING, CHARLITERAL
+%state STRING, CHAR
 
 %%
 
@@ -128,21 +105,23 @@ SingleCharacter = [^\r\n\'\\]
   "seq"                         { return symbol("seq", sym.TYPE, new Integer( sym.SEQ )); }
   "dict"                        { return symbol("dict", sym.TYPE, new Integer( sym.DICT )); }
 
+
   /* LITERALS */
-  /* identifiers */
-  {Identifier} { return symbol("Identifier", sym.IDENTIFIER, yytext()); }
+
   /* boolean literals */
-  {BoolLiteral} { return symbol("Boolconst", sym.BOOLEAN_LITERAL, new Boolean(parseBool(yytext()))); }
+  {BoolLiteral} { return symbol("Boolconst", sym.Literal, sym.BOOLEAN_LITERAL, yytext()); }
+
   /* Integer Literal */
-  {IntLiteral} { return symbol("Intconst", sym.INTEGER_LITERAL, new Integer(Integer.parseInt(yytext()))); }
+  {IntLiteral} { return symbol("Intconst", sym.Literal, sym.INTEGER_LITERAL, yytext()); }
 
-  {NullLiteral} { return symbol("null", sym.NULL_LITERAL:); }
+  /* Null Literal */
+  {NullLiteral} { return symbol("Null", sym.Literal, sym.NULL_LITERAL, yytext()); }
 
-  /* HELP ! */
-//  {RatLiteral} { return symbol("Ratconst", sym.RAT_LITERAL, new Rational}
+  /* Rational Literal*/
+  {RatLiteral} { return symbol("Ratconst", sym.Literal, sym.RATIONAL_LITERAL, yytext()); }
 
   /* Float Literal */
-  {FloatLiteral} { return symbol("Floatconst", sym.FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1))); }
+  {FloatLiteral} { return symbol("Floatconst", sym.Literal, sym.FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1))); }
 
   /* separators & assignment */
   "("                            { return symbol("(", sym.LPAREN); }
