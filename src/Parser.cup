@@ -48,6 +48,7 @@ terminal IDENTIFIER;
 terminal ASSIGN;
 
 // Literals
+terminal Literal;
 terminal BOOLEAN_LITERAL;
 terminal NULL_LITERAL;
 terminal INTEGER_LITERAL, FLOATING_POINT_LITERAL, RATIONAL_LITERAL;  // Numbers
