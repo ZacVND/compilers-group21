@@ -92,7 +92,7 @@ SingleCharacter = [^\r\n\'\\]
   "break"                       { return symbol("break", sym.BREAK); }
   "if"                          { return symbol("if", sym.IF); }
   "fi"                          { return symbol("fi", sym.FI); }
-  "then"                        { return symbol("THEN", symTHEN); }
+  "then"                        { return symbol("then", sym.THEN); }
   "else"                        { return symbol("else", sym.ELSE); }
 
   /* Keywords for Datatypes*/
@@ -109,19 +109,19 @@ SingleCharacter = [^\r\n\'\\]
   /* LITERALS */
 
   /* boolean literals */
-  {BoolLiteral} { return symbol("Boolconst", sym.Literal, sym.BOOLEAN_LITERAL, yytext()); }
+  {BoolLiteral} { return symbol("Boolconst", sym.BOOLEAN_LITERAL, yytext()); }
 
   /* Integer Literal */
-  {IntLiteral} { return symbol("Intconst", sym.Literal, sym.INTEGER_LITERAL, yytext()); }
+  {IntLiteral} { return symbol("Intconst", sym.INTEGER_LITERAL, yytext()); }
 
   /* Null Literal */
-  {NullLiteral} { return symbol("Null", sym.Literal, sym.NULL_LITERAL, yytext()); }
+  {NullLiteral} { return symbol("Null", sym.NULL_LITERAL, yytext()); }
 
   /* Rational Literal*/
-  {RatLiteral} { return symbol("Ratconst", sym.Literal, sym.RATIONAL_LITERAL, yytext()); }
+  {RatLiteral} { return symbol("Ratconst", sym.RATIONAL_LITERAL, yytext()); }
 
   /* Float Literal */
-  {FloatLiteral} { return symbol("Floatconst", sym.Literal, sym.FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1))); }
+  {FloatLiteral} { return symbol("Floatconst", sym.FLOATING_POINT_LITERAL, new Float(yytext()); }
 
   /* separators & assignment */
   "("                            { return symbol("(", sym.LPAREN); }
@@ -130,7 +130,7 @@ SingleCharacter = [^\r\n\'\\]
   "}"                            { return symbol("}", sym.RBRACE); }
   "["                            { return symbol("[", sym.LBRACK); }
   "]"                            { return symbol("]", sym.RBRACK); }
-  ";"                            { return symbol("semiconlon", sym.SEMICOLON); }
+  ";"                            { return symbol("semicolon", sym.SEMICOLON); }
   ","                            { return symbol("comma", sym.COMMA); }
   ":="                            { return symbol(":=", sym.ASSIGN); }
 
@@ -165,6 +165,7 @@ SingleCharacter = [^\r\n\'\\]
 
   /* Type aliasing and type definition */
   "tdef"                         { return symbol("tdef", sym.TDEF); }
+  "fdef"                         { return symbol("fdef", sym.FDEF); }
   "alias"                        { return symbol("alias", sym.ALIAS); }
 
   /* string literal */

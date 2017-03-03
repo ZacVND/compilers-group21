@@ -15,14 +15,14 @@ parser code {:
   }
 :};
 
-terminal IN;  // What is this supposed to do ????
+terminal IN;
 
 // IO
 terminal READ, PRINT;
 
 // Conditional Statements
 terminal LOOP, POOL;
-terminal IF, FI;
+terminal IF, THEN, FI;
 terminal BREAK, ELSE;  // Conditional Statements - Control
 terminal BINOP, BBINOP, BUNOP; // Logical Comparators - Type
 
@@ -41,14 +41,13 @@ terminal CHAR;
 terminal TOP;
 
 // Definitions
-terminal TDEF, FDEG; // Define type & functions
+terminal TDEF, FDEF; // Define type & functions
 terminal ALIAS;
 terminal MAIN;
 terminal IDENTIFIER;
 terminal ASSIGN;
 
 // Literals
-terminal Literal;
 terminal BOOLEAN_LITERAL;
 terminal NULL_LITERAL;
 terminal INTEGER_LITERAL, FLOATING_POINT_LITERAL, RATIONAL_LITERAL;  // Numbers
@@ -64,7 +63,7 @@ terminal DOT;
 terminal COLON, COLONCOLON;
 
 // Operators
-terminal PLUS, MINUS, MULT, DIV, XOR, EXP;
+terminal PLUS, MINUS, MULT, DIV, EXP;
 
 non terminal cond, con_inner;
 non terminal stmt, expr, term, type, dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals;
@@ -74,9 +73,10 @@ stmt ::= SEMICOLON
     | IDENTIFIER ASSIGN expr SEMICOLON
     | TDEF IDENTIFIER SEMICOLON
     | ALIAS type IDENTIFIER SEMICOLON
+    | BREAK
     ;
 
-cond_literal ::= IF cond stmt FI
+cond_literal ::= IF LPAREN cond RPAREN THEN stmt FI
     | IF cond stmt ctrl_else FI
     ;
 
@@ -86,16 +86,9 @@ ctrl_else ::= ELSE LBRACE stmt RBRACE
 
 cond ::= BOOLEAN_LITERAL
     | LPAREN cond RPAREN
-    | expr EQ expr
-    | expr GT expr
-    | expr LT expr
-    | expr LEQ expr
-    | expr GEQ expr
-    | expr NEQ expr
-    | NOT cond
-    | cond AND cond
-    | cond OR cond
-    | cond IMPLICATION cond
+    | expr BBINOP expr
+    | expr BINOP expr
+    | BUNOP cond
     ;
 
 expr ::= expr PLUS term
