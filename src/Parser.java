@@ -4,6 +4,10 @@
 //----------------------------------------------------
 
 import java_cup.runtime.*;
+import java.util.*;
+import java.io.*;
+import java_cup.runtime.*;
+import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -166,6 +170,17 @@ public class Parser extends java_cup.runtime.lr_parser {
 
   /** <code>error</code> Symbol index. */
   public int error_sym() {return 1;}
+
+
+
+  public boolean syntaxErrors;
+
+  Lexer lexer;
+
+  public Parser(Lexer lex, ComplexSymbolFactory sf) {
+    super(lex,sf);
+    lexer = lex;
+  }
 
 
 /** Cup generated class to encapsulate user supplied action code.*/

@@ -962,11 +962,11 @@ public class Lexer implements java_cup.runtime.Scanner, sym {
             }
           case 120: break;
           case 49: 
-            { yybegin(YYINITIAL); return symbol("character", sym.CHARACTER_LITERAL, yytext().charAt(0));
+            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, yytext().charAt(0));
             }
           case 121: break;
           case 50: 
-            { return symbol(sym.FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1)));
+            { return symbol("Floatconst", sym.FLOATING_POINT_LITERAL, new Float(yytext().substring(0,yylength()-1)));
             }
           case 122: break;
           case 51: 
@@ -986,35 +986,35 @@ public class Lexer implements java_cup.runtime.Scanner, sym {
             }
           case 126: break;
           case 55: 
-            { yybegin(YYINITIAL); return symbol("character", sym.CHARACTER_LITERAL, '\n');
+            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\n');
             }
           case 127: break;
           case 56: 
-            { yybegin(YYINITIAL); return symbol("character", sym.CHARACTER_LITERAL, '\"');
+            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\"');
             }
           case 128: break;
           case 57: 
-            { yybegin(YYINITIAL); return symbol("character", sym.CHARACTER_LITERAL, '\'');
+            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\'');
             }
           case 129: break;
           case 58: 
-            { yybegin(YYINITIAL); return symbol("character", sym.CHARACTER_LITERAL, '\\');
+            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\\');
             }
           case 130: break;
           case 59: 
-            { yybegin(YYINITIAL); return symbol("character", sym.CHARACTER_LITERAL, '\r');
+            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\r');
             }
           case 131: break;
           case 60: 
-            { yybegin(YYINITIAL); return symbol("character", sym.CHARACTER_LITERAL, '\t');
+            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\t');
             }
           case 132: break;
           case 61: 
-            { yybegin(YYINITIAL); return symbol("character", sym.CHARACTER_LITERAL, '\b');
+            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\b');
             }
           case 133: break;
           case 62: 
-            { yybegin(YYINITIAL); return symbol("character", sym.CHARACTER_LITERAL, '\f');
+            { yybegin(YYINITIAL); return symbol("Charconst", sym.CHARACTER_LITERAL, '\f');
             }
           case 134: break;
           case 63: 
