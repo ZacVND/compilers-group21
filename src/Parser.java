@@ -33,7 +33,7 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\072\000\002\002\003\000\002\002\004\000\002\002" +
+    "\000\074\000\002\002\003\000\002\002\004\000\002\002" +
     "\006\000\002\002\005\000\002\002\006\000\002\003\003" +
     "\000\002\003\005\000\002\003\005\000\002\003\005\000" +
     "\002\003\005\000\002\003\005\000\002\003\005\000\002" +
@@ -51,7 +51,7 @@ public class Parser extends java_cup.runtime.lr_parser {
     "\002\012\004\000\002\013\005\000\002\013\005\000\002" +
     "\013\005\000\002\014\005\000\002\014\003\000\002\014" +
     "\004\000\002\015\003\000\002\015\005\000\002\015\005" +
-    "" });
+    "\000\002\017\003\000\002\017\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -731,6 +731,24 @@ class CUP$Parser$actions {
               Object RESULT =null;
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("seq_literal_inner",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 58: // input_output_literal ::= READ 
+            {
+              Object RESULT =null;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("input_output_literal",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 59: // input_output_literal ::= PRINT 
+            {
+              Object RESULT =null;
+
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("input_output_literal",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
 

@@ -10,7 +10,7 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
  * <a href="http://www.jflex.de/">JFlex</a> 1.6.1
  * from the specification file <tt>src/Lexer.lex</tt>
  */
-public class Lexer implements java_cup.runtime.Scanner, sym {
+public class Lexer implements java_cup.runtime.Scanner {
 
   /** This character denotes the end of file */
   public static final int YYEOF = -1;

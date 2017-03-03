@@ -89,11 +89,14 @@ terminal XOR;
 terminal EXP;
 
 non terminal stmt, cond, expr, term, type, dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals;
+non terminal input_output_literal;
+
 stmt ::= SEMICOLON
     | IDENTIFIER ASSIGN expr SEMICOLON
     | TDEF IDENTIFIER SEMICOLON
     | ALIAS type IDENTIFIER SEMICOLON
     ;
+
 cond ::= BOOLEAN_LITERAL
     | LPAREN cond RPAREN
     | expr EQ expr
@@ -169,4 +172,8 @@ seq_literal ::= LBRACK seq_literal_inner RBRACK
 seq_literal_inner ::= all_literals
     | seq_literal_inner COMMA seq_literal_inner
     | seq_literal_inner COMMA seq_literal
+    ;
+
+input_output_literal ::= READ
+    | PRINT
     ;
