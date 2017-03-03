@@ -3,7 +3,7 @@ import java_cup.runtime.*;
 %%
 
 %public
-%class Scanner
+%class Lexer
 %implements sym
 
 %unicode
@@ -65,27 +65,30 @@ SingleCharacter = [^\r\n\'\\]
 <YYINITIAL> {
 
   /* keywords */
-  "bool"                      { return symbol(BOOLEAN); }
-  "char"                         { return symbol(CHAR); }
   "loop"                        { return symbol(LOOP); }
   "break"                        { return symbol(BREAK); }
   "pool"                           { return symbol(POOL); }
   "else"                         { return symbol(ELSE); }
-  "float"                        { return symbol(FLOAT); }
-  "int"                          { return symbol(INT); }
-  "rat"                         { return symbol(RAT); }
   "if"                           { return symbol(IF); }
   "fi"                           { return symbol(FI); }
-  "dict"                           { return symbol(DICT); }
   "top"                           { return symbol(TOP); }
-  "seq"                           { return symbol(SEQ); }
   "tdef"                           { return symbol(TDEF); }
+  "fdef"                           { return symbol(FDEF); }
   "alias"                           { return symbol(ALIAS); }
   "main"                           { return symbol(MAIN); }
 
+  /* data types */
+  "int"                          { return symbol(INT); }
+  "float"                        { return symbol(FLOAT); }
+  "rat"                         { return symbol(RAT); }
+  "bool"                      { return symbol(BOOLEAN); }
+  "char"                         { return symbol(CHAR); }
+  "dict"                           { return symbol(DICT); }
+  "seq"                           { return symbol(SEQ); }
+
   /* boolean literals */
-  "true"                         { return symbol(BOOLEAN_LITERAL, true); }
-  "false"                        { return symbol(BOOLEAN_LITERAL, false); }
+  "T"                         { return symbol(BOOLEAN_LITERAL, true); }
+  "F"                        { return symbol(BOOLEAN_LITERAL, false); }
 
   /* null literal */
   "null"                         { return symbol(NULL_LITERAL); }
@@ -103,23 +106,25 @@ SingleCharacter = [^\r\n\'\\]
 
   /* operators */
   "="                            { return symbol(EQ); }
+  ":="                            { return symbol(ASSIGN); }
   ">"                            { return symbol(GT); }
   "<"                            { return symbol(LT); }
-  "!"                            { return symbol(NOT); }
   ":"                            { return symbol(COLON); }
   "::"                            { return symbol(COLONCOLON); }
-  "=="                           { return symbol(EQEQ); }
   "<="                           { return symbol(LTEQ); }
   ">="                           { return symbol(GTEQ); }
   "!="                           { return symbol(NOTEQ); }
+
+  "!"                            { return symbol(NOT); }
   "&&"                           { return symbol(ANDAND); }
   "||"                           { return symbol(OROR); }
+  "=>"                            { return symbol(IMPLICATION); }
+
   "+"                            { return symbol(PLUS); }
   "-"                            { return symbol(MINUS); }
   "*"                            { return symbol(MULT); }
   "/"                            { return symbol(DIV); }
   "^"                            { return symbol(XOR); }
-  "%"                            { return symbol(MOD); }
 
   /* string literal */
   \"                             { yybegin(STRING); string.setLength(0); }

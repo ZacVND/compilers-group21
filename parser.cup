@@ -1,0 +1,143 @@
+import java_cup.runtime.*;
+
+terminal LOOP;
+terminal BREAK;
+terminal POOL;
+terminal ELSE;
+terminal IF;
+terminal FI;
+terminal TOP;
+terminal TDEF;
+terminal FDEF;
+terminal ALIAS;
+terminal MAIN;
+terminal IDENTIFIER;
+
+terminal INT;
+terminal FLOAT;
+terminal RAT;
+terminal BOOLEAN;
+terminal CHAR;
+terminal DICT;
+terminal SEQ;
+
+terminal BOOLEAN_LITERAL;
+terminal NULL_LITERAL;
+terminal CHARLITERAL;
+terminal INTEGER_LITERAL;
+terminal FLOATING_POINT_LITERAL;
+terminal RATIONAL_LITERAL;
+terminal STRING_LITERAL;
+
+terminal LPAREN;
+terminal RPAREN;
+terminal LBRACE;
+terminal RBRACE;
+terminal LBRACK;
+terminal RBRACK;
+terminal SEMICOLON;
+terminal COMMA;
+terminal DOT;
+
+terminal EQ;
+terminal ASSIGN;
+terminal GT;
+terminal LT;
+terminal COLON;
+terminal COLONCOLON;
+terminal LTEQ;
+terminal GTEQ;
+terminal NOTEQ;
+
+terminal NOT;
+terminal ANDAND;
+terminal OROR;
+terminal IMPLICATION;
+
+terminal PLUS;
+terminal MINUS;
+terminal MULT;
+terminal DIV;
+terminal XOR;
+
+non terminal stmt, cond, expr, term, type, dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals;
+stmt ::= SEMICOLON
+    | IDENTIFIER ASSIGN expr SEMICOLON
+    | TDEF IDENTIFIER SEMICOLON
+    | ALIAS type IDENTIFIER SEMICOLON
+    ;
+cond ::= BOOLEAN_LITERAL
+    | LPAREN cond RPAREN
+    | expr EQ expr
+    | expr GT expr
+    | expr LT expr
+    | expr LTEQ expr
+    | expr GTEQ expr
+    | expr NOTEQ expr
+    | NOT cond
+    | cond ANDAND cond
+    | cond OROR cond
+    | cond IMPLICATION cond
+    ;
+expr ::= expr PLUS term
+    | expr MINUS term
+    | expr MULT term
+    | expr DIV term
+    | expr XOR term
+    | term
+    ;
+
+term ::= LPAREN term RPAREN
+    | INTEGER_LITERAL
+    | FLOATING_POINT_LITERAL
+    | RATIONAL_LITERAL
+    ;
+
+all_literals ::= INTEGER_LITERAL
+    | FLOATING_POINT_LITERAL
+    | RATIONAL_LITERAL
+    | STRING_LITERAL
+    | CHARLITERAL
+    | BOOLEAN_LITERAL
+    ;
+
+type ::= dict_type
+    | seq_type
+    | primitive
+    ;
+
+dict_type ::= DICT LT primitive COMMA primitive GT
+    | DICT LT TOP COMMA TOP GT
+    | DICT LT TOP COMMA primitive GT
+    | DICT LT primitive COMMA TOP GT
+    ;
+
+seq_type ::= SEQ LT primitive GT
+    | SEQ LT TOP GT
+    ;
+
+primitive ::= CHAR
+    | INT
+    | FLOAT
+    | RAT
+    | BOOLEAN
+    ;
+
+dict_literal ::= LBRACE dict_literal_inner RBRACE
+    | LBRACE RBRACE
+    ;
+
+dict_literal_inner ::= all_literals COLON all_literals
+    | all_literals COLON primitive
+    | dict_literal_inner COMMA dict_literal_inner
+    ;
+
+seq_literal ::= LBRACK seq_literal_inner RBRACK
+    | STRING_LITERAL
+    | LBRACK RBRACK
+    ;
+
+seq_literal_inner ::= all_literals
+    | seq_literal_inner COMMA seq_literal_inner
+    | seq_literal_inner COMMA seq_literal
+    ;
