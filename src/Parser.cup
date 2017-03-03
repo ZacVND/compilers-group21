@@ -54,7 +54,7 @@ terminal INTEGER_LITERAL, FLOATING_POINT_LITERAL, RATIONAL_LITERAL;  // Numbers
 terminal STRING_LITERAL, CHARACTER_LITERAL;  // String & Char
 
 // Separators
-terminal LPAREN, RPAREN, LBRACE, RBRACE, LBARACK, RBRACK;
+terminal LPAREN, RPAREN, LBRACE, RBRACE, LBRACK, RBRACK;
 terminal SEMICOLON;
 terminal COMMA;
 terminal DOT;
@@ -66,7 +66,7 @@ terminal COLON, COLONCOLON;
 terminal PLUS, MINUS, MULT, DIV, EXP;
 
 non terminal program;
-non terminal main, function_inner, stmt, expr, term, cond, cond_inner, loop
+non terminal main, function_inner, stmt, expr, term, cond, cond_inner, loop;
 non terminal typedef, typedef_inner, funcdef;
 non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat;
 

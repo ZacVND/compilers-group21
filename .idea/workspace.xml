@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb90dbe6-a356-4724-9c2e-56a197716020" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/Lexer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/Parser$CUP$Parser$actions.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/Parser.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/SC.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/sym.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Parser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/sym.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Lexer.java" afterPath="$PROJECT_DIR$/src/Lexer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Parser.cup" afterPath="$PROJECT_DIR$/src/Parser.cup" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,12 +18,24 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Makefile" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Makefile" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Makefile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+            <state relative-caret-position="405">
+              <caret line="27" column="82" lean-forward="true" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="82" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Parser.cup" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Parser.cup">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="56" column="43" lean-forward="false" selection-start-line="56" selection-start-column="43" selection-end-line="56" selection-end-column="43" />
+              <folding>
+                <marker date="1488579700000" expanded="true" signature="167:310" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -51,6 +57,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>all</find>
+      <find>NON</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -59,6 +66,13 @@
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
       <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/Parser.cup" />
+      </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -97,6 +111,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="compilers-group21" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="compilers-group21" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="compilers-group21" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -210,12 +238,12 @@
       <option name="presentableId" value="Default" />
       <updated>1488555820646</updated>
       <workItem from="1488555823918" duration="72000" />
-      <workItem from="1488579351696" duration="197000" />
+      <workItem from="1488579351696" duration="371000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="269000" />
+    <option name="totallyTimeSpent" value="443000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1046" extended-state="6" />
@@ -295,9 +323,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Makefile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+        <state relative-caret-position="405">
+          <caret line="27" column="82" lean-forward="true" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="82" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parser.cup">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="56" column="43" lean-forward="false" selection-start-line="56" selection-start-column="43" selection-end-line="56" selection-end-column="43" />
+          <folding>
+            <marker date="1488579700000" expanded="true" signature="167:310" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
