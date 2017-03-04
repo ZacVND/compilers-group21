@@ -118,7 +118,7 @@ SingleCharacter = [^\r\n\'\\]
   {RatLiteral} { return symbol("Ratconst", sym.RATIONAL_LITERAL, yytext()); }
 
   /* Float Literal */
-  {FloatLiteral} { return symbol("Floatconst", sym.FLOATING_POINT_LITERAL, new Float(yytext()); }
+  {FloatLiteral} { return symbol("Floatconst", sym.FLOATING_POINT_LITERAL, yytext()); }
 
   /* separators & assignment */
   "("                            { return symbol("(", sym.LPAREN); }
