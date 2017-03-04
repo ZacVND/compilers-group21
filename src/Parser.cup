@@ -65,10 +65,19 @@ terminal COLON, COLONCOLON;
 // Operators
 terminal PLUS, MINUS, MULT, DIV, EXP;
 
+// Non Terminals
 non terminal program;
 non terminal main, function_inner, stmt, expr, term, cond, cond_inner, loop;
 non terminal typedef, typedef_inner, funcdef;
 non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat;
+
+
+// Precedences
+precedence left ASSIGN;
+precedence left BINOP, BUNOP, BBINOP;
+precedence left PLUS, MINUS;
+precedence left MULT, DIV;
+precedence left EXP;
 
 program ::= main function_inner | function_inner main | function_inner main function_inner | main;
 
