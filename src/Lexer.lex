@@ -171,14 +171,14 @@ SingleCharacter = [^\r\n\'\\]
   /* character literal */
   \'                             { yybegin(CHAR); }
 
+  /* identifiers */
+  {Identifier}                   { return symbol("Identifier", sym.IDENTIFIER, yytext()); }
+
   /* comments */
   {Comment}                      { /* ignore */ }
 
   /* whitespace */
   {WhiteSpace}                   { /* ignore */ }
-
-  /* identifiers */
-  {Identifier}                   { return symbol("Identifier", sym.IDENTIFIER, yytext()); }
 }
 
 <STRING> {

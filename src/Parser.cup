@@ -109,15 +109,14 @@ funcdef ::= FDEF IDENTIFIER LPAREN typedef_inner RPAREN LBRACE function_inner RB
     | FDEF IDENTIFIER LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
     ;
 
-cond ::= IF LPAREN cond RPAREN THEN stmt FI
-    | IF LPAREN cond RPAREN THEN stmt ELSE FI
+cond ::= IF LPAREN cond_inner RPAREN THEN stmt FI
+    | IF LPAREN cond_inner RPAREN THEN stmt ELSE FI
     ;
 
 cond_inner ::= BOOLEAN_LITERAL
-    | LPAREN cond RPAREN
     | expr BBINOP expr
     | expr BINOP expr
-    | BUNOP cond
+    | BUNOP cond_inner
     ;
 
 expr ::= expr BINOP term
@@ -128,6 +127,8 @@ expr ::= expr BINOP term
 
 term ::= LPAREN expr RPAREN
     | all_literals
+    | dict_literal
+    | seq_literal
     ;
 
 all_literals ::= INTEGER_LITERAL
@@ -136,8 +137,6 @@ all_literals ::= INTEGER_LITERAL
     | STRING_LITERAL
     | CHARACTER_LITERAL
     | BOOLEAN_LITERAL
-    | dict_literal
-    | seq_literal
     ;
 
 all_types ::= dict_type
