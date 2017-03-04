@@ -381,11 +381,8 @@ public class Lexer implements java_cup.runtime.Scanner {
 
   /* user code: */
     StringBuffer string = new StringBuffer();
-    public Lexer(java.io.Reader in, ComplexSymbolFactory sf){
-        this(in);
-        symbolFactory = sf;
-    }
-    ComplexSymbolFactory symbolFactory;
+
+    ComplexSymbolFactory symbolFactory = new ComplexSymbolFactory();
 
     private Symbol symbol(String name, int sym) {
         Location left = new Location(yyline+1, yycolumn+1, yychar);
