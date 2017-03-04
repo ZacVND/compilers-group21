@@ -120,7 +120,7 @@ cond_inner ::= BOOLEAN_LITERAL
     | BUNOP cond_inner
     ;
 
-expr ::= expr BINOP term
+expr ::= term BINOP expr
     | LPAREN expr RPAREN
     | seq_concat
     | term
@@ -174,12 +174,11 @@ seq_literal ::= LBRACK seq_literal_inner RBRACK
     | LBRACK all_literals COLON all_literals RBRACK
     | LBRACK all_literals COLON RBRACK
     | LBRACK COLON all_literals RBRACK
-    | STRING_LITERAL
     | LBRACK RBRACK
     ;
 
 seq_literal_inner ::= all_literals
-    | seq_literal_inner COMMA seq_literal_inner
+    | all_literals COMMA seq_literal_inner
     ;
 
 seq_concat ::= IDENTIFIER COLONCOLON IDENTIFIER
