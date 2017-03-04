@@ -95,6 +95,7 @@ SingleCharacter = [^\r\n\'\\]
   "rat"                         { return symbol("rat", sym.TYPE, new Integer( sym.RAT )); }
   "float"                       { return symbol("float", sym.TYPE, new Integer( sym.FLOAT )); }
   "boolean"                     { return symbol("bool", sym.TYPE, new Integer( sym.BOOLEAN )); }
+  "string"                        { return symbol("string", sym.TYPE, new Integer( sym.STRING )); }
   "char"                        { return symbol("char", sym.TYPE, new Integer( sym.CHAR )); }
   "seq"                         { return symbol("seq", sym.TYPE, new Integer( sym.SEQ )); }
   "dict"                        { return symbol("dict", sym.TYPE, new Integer( sym.DICT )); }

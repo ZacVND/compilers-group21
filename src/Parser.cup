@@ -38,6 +38,7 @@ terminal INT, FLOAT, RAT;
 terminal SEQ, DICT;
 terminal BOOLEAN;
 terminal CHAR;
+terminal STRING;
 terminal TOP;
 
 // Definitions
@@ -69,7 +70,7 @@ terminal PLUS, MINUS, MULT, DIV, EXP;
 non terminal program;
 non terminal main, function_inner, stmt, expr, term, cond, cond_inner, loop;
 non terminal typedef, typedef_inner, funcdef;
-non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat;
+non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat, identifier;
 
 
 // Precedences
@@ -81,15 +82,16 @@ precedence left EXP;
 
 program ::= main function_inner | function_inner main | function_inner main function_inner | main;
 
-stmt ::= IDENTIFIER ASSIGN expr SEMICOLON //assignment
-    | IDENTIFIER COLON all_types SEMICOLON //declaration
-    | IDENTIFIER COLON IDENTIFIER SEMICOLON //declaration
-    | IDENTIFIER COLON all_types ASSIGN expr SEMICOLON //initialisation
-    | IDENTIFIER COLON IDENTIFIER ASSIGN expr SEMICOLON //initialisation
-    | READ IDENTIFIER SEMICOLON //input
+stmt ::= identifier ASSIGN expr SEMICOLON //assignment
+    | identifier COLON all_types SEMICOLON //declaration
+    | identifier COLON identifier SEMICOLON //declaration
+    | identifier COLON all_types ASSIGN expr SEMICOLON //initialisation
+    | identifier COLON identifier ASSIGN expr SEMICOLON //initialisation
+    | READ identifier SEMICOLON //input
     | PRINT expr SEMICOLON //output
-    | ALIAS all_types IDENTIFIER SEMICOLON //alias
+    | ALIAS all_types identifier SEMICOLON //alias
     | BREAK
+    | assignment
     | typedef
     | funcdef
     | cond //conditional - if then, if then else
@@ -97,6 +99,7 @@ stmt ::= IDENTIFIER ASSIGN expr SEMICOLON //assignment
     ;
 
 main ::= MAIN LBRACE function_inner RBRACE SEMICOLON
+    | MAIN LBRACE RBRACE SEMICOLON //matches an empty main method
     ;
 
 function_inner ::= stmt
@@ -106,17 +109,17 @@ function_inner ::= stmt
 loop ::= LOOP stmt POOL
     ;
 
-typedef ::= TDEF IDENTIFIER LBRACE typedef_inner RBRACE SEMICOLON
+typedef ::= TDEF identifier LBRACE typedef_inner RBRACE SEMICOLON
     ;
 
-typedef_inner ::= IDENTIFIER COLON IDENTIFIER
-    | IDENTIFIER COLON all_types
-    | IDENTIFIER COLON IDENTIFIER COMMA typedef_inner
-    | IDENTIFIER COLON all_types COMMA typedef_inner
+typedef_inner ::= identifier COLON identifier
+    | identifier COLON all_types
+    | identifier COLON identifier COMMA typedef_inner
+    | identifier COLON all_types COMMA typedef_inner
     ;
 
-funcdef ::= FDEF IDENTIFIER LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE
-    | FDEF IDENTIFIER LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
+funcdef ::= FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE
+    | FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
     ;
 
 cond ::= IF LPAREN cond_inner RPAREN THEN stmt FI
@@ -138,7 +141,7 @@ expr ::= expr BINOP expr
 term ::= all_literals
     | dict_literal
     | seq_literal
-    | IDENTIFIER
+    | identifier
     ;
 
 all_literals ::= INTEGER_LITERAL
@@ -165,6 +168,7 @@ seq_type ::= SEQ LT primitive GT
     ;
 
 primitive ::= CHAR
+    | STRING
     | INT
     | FLOAT
     | RAT
@@ -190,10 +194,14 @@ seq_literal_inner ::= all_literals
     | all_literals COMMA seq_literal_inner
     ;
 
-seq_concat ::= IDENTIFIER COLONCOLON IDENTIFIER
-    | IDENTIFIER COLONCOLON all_literals
-    | all_literals COLONCOLON IDENTIFIER
+seq_concat ::= identifier COLONCOLON identifier
+    | identifier COLONCOLON all_literals
+    | all_literals COLONCOLON identifier
     | all_literals COLONCOLON all_literals
-    | IDENTIFIER COLONCOLON seq_concat
+    | identifier COLONCOLON seq_concat
     | all_literals COLONCOLON seq_concat
+    ;
+
+identifier ::= IDENTIFIER
+    | IDENTIFIER DOT identifier
     ;
