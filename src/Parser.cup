@@ -91,7 +91,6 @@ stmt ::= identifier ASSIGN expr SEMICOLON //assignment
     | PRINT expr SEMICOLON //output
     | ALIAS all_types identifier SEMICOLON //alias
     | BREAK
-    | assignment
     | typedef
     | funcdef
     | cond //conditional - if then, if then else
