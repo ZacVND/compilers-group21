@@ -102,7 +102,8 @@ typedef ::= TDEF IDENTIFIER LBRACE typedef_inner RBRACE SEMICOLON
 
 typedef_inner ::= IDENTIFIER COLON IDENTIFIER
     | IDENTIFIER COLON all_types
-    | typedef_inner COMMA typedef_inner
+    | IDENTIFIER COLON IDENTIFIER COMMA typedef_inner
+    | IDENTIFIER COLON all_types COMMA typedef_inner
     ;
 
 funcdef ::= FDEF IDENTIFIER LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE
@@ -120,15 +121,15 @@ cond_inner ::= BOOLEAN_LITERAL
     ;
 
 expr ::= expr BINOP term
+    | LPAREN expr RPAREN
     | seq_concat
     | term
-    | IDENTIFIER
     ;
 
-term ::= LPAREN expr RPAREN
-    | all_literals
+term ::= all_literals
     | dict_literal
     | seq_literal
+    | IDENTIFIER
     ;
 
 all_literals ::= INTEGER_LITERAL
@@ -166,7 +167,7 @@ dict_literal ::= LBRACE dict_literal_inner RBRACE
     ;
 
 dict_literal_inner ::= all_literals COLON all_literals
-    | dict_literal_inner COMMA dict_literal_inner
+    | all_literals COLON all_literals COMMA dict_literal_inner
     ;
 
 seq_literal ::= LBRACK seq_literal_inner RBRACK
@@ -179,7 +180,6 @@ seq_literal ::= LBRACK seq_literal_inner RBRACK
 
 seq_literal_inner ::= all_literals
     | seq_literal_inner COMMA seq_literal_inner
-    | seq_literal_inner COMMA seq_literal
     ;
 
 seq_concat ::= IDENTIFIER COLONCOLON IDENTIFIER
