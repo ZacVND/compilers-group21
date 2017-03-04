@@ -120,7 +120,7 @@ cond_inner ::= BOOLEAN_LITERAL
     | BUNOP cond_inner
     ;
 
-expr ::= term BINOP expr
+expr ::= expr BINOP expr
     | LPAREN expr RPAREN
     | seq_concat
     | term
