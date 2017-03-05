@@ -13,12 +13,23 @@ parser code {:
     super(lex,sf);
     lexer = lex;
   }
+
+  public void syntax_error(Symbol current_token) {
+    syntaxErrors = true;
+    report_error("Syntax error at line " + (current_token.left+1) + ", column "
+    + current_token.right, null);
+  }
+
 :};
 
 terminal IN;
 
 // IO
 terminal READ, PRINT;
+
+// Function
+terminal QMARK;
+terminal RETURN;
 
 // Conditional Statements
 terminal LOOP, POOL;
@@ -29,9 +40,7 @@ terminal BINOP, BBINOP, BUNOP; // BINOP = binary op, BBINOP = logical op, BUNOP 
 // Logical Operators
 terminal EQ, GT, LT, LEQ, GEQ, NEQ;
 terminal NOT, AND, OR, IMPLICATION;
-terminal TYPE;
 terminal COMP;
-terminal QMARK;
 
 // Types
 terminal INT, FLOAT, RAT;
@@ -96,6 +105,8 @@ stmt ::= identifier ASSIGN expr SEMICOLON //assignment
     | funcdef
     | cond //conditional - if then, if then else
     | loop
+    | RETURN expr SEMICOLON
+    | RETURN SEMICOLON
     ;
 
 main ::= MAIN LBRACE function_inner RBRACE SEMICOLON
@@ -131,7 +142,7 @@ cond ::= IF LPAREN cond_inner RPAREN THEN stmt FI
 
 cond_inner ::= BOOLEAN_LITERAL
     | expr BBINOP expr
-    | expr BINOP expr
+    | expr COMP expr
     | BUNOP cond_inner
     ;
 

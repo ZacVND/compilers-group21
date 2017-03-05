@@ -88,17 +88,18 @@ SingleCharacter = [^\r\n\'\\]
   "fi"                          { return symbol("fi", sym.FI); }
   "then"                        { return symbol("then", sym.THEN); }
   "else"                        { return symbol("else", sym.ELSE); }
+  "return"                        { return symbol("return", sym.RETURN); }
 
   /* Keywords for Datatypes*/
-  "top"                         { return symbol("top", sym.TYPE, new Integer( sym.TOP )); }
-  "int"                         { return symbol("int", sym.TYPE, new Integer( sym.INT )); }
-  "rat"                         { return symbol("rat", sym.TYPE, new Integer( sym.RAT )); }
-  "float"                       { return symbol("float", sym.TYPE, new Integer( sym.FLOAT )); }
-  "boolean"                     { return symbol("bool", sym.TYPE, new Integer( sym.BOOLEAN )); }
-  "string"                        { return symbol("string", sym.TYPE, new Integer( sym.STRING )); }
-  "char"                        { return symbol("char", sym.TYPE, new Integer( sym.CHAR )); }
-  "seq"                         { return symbol("seq", sym.TYPE, new Integer( sym.SEQ )); }
-  "dict"                        { return symbol("dict", sym.TYPE, new Integer( sym.DICT )); }
+  "top"                         { return symbol("top", sym.TOP); }
+  "int"                         { return symbol("int", sym.INT); }
+  "rat"                         { return symbol("rat", sym.RAT); }
+  "float"                       { return symbol("float", sym.FLOAT); }
+  "boolean"                     { return symbol("bool", sym.BOOLEAN); }
+  "string"                        { return symbol("string", sym.STRING); }
+  "char"                        { return symbol("char", sym.CHAR); }
+  "seq"                         { return symbol("seq", sym.SEQ); }
+  "dict"                        { return symbol("dict", sym.DICT); }
 
 
   /* LITERALS */
@@ -137,7 +138,10 @@ SingleCharacter = [^\r\n\'\\]
   "<="                           { return symbol("leq", sym.COMP, new Integer( sym.LEQ )); }
   ">="                           { return symbol("geq", sym.COMP, new Integer( sym.GEQ )); }
   "!="                           { return symbol("neq", sym.COMP, new Integer( sym.NEQ )); }
-  "?"                            { return symbol("?", sym.COMP, new Integer( sym.QMARK )); }
+
+  /*Function predicate operator*/
+  "?"                            { return symbol("?", sym.QMARK); }
+
   "main"                         { return symbol("main", sym.MAIN); }
 
   /* Logical Operators */
