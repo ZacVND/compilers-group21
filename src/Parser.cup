@@ -150,6 +150,8 @@ expr_list ::= expr
     ;
 
 expr ::= expr BINOP expr
+    | expr BBINOP expr
+    | BUNOP expr
     | LPAREN expr RPAREN
     | seq_concat
     | term
