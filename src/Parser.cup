@@ -73,20 +73,34 @@ terminal COLON, COLONCOLON;
 // Operators
 terminal PLUS, MINUS, MULT, DIV, EXP;
 
+
 // Non Terminals
-non terminal program;
-non terminal main, function_inner, stmt, expr, expr_list, term, conditional_statement, boolean_statement;
-non terminal typedef, typedef_inner, funcdef, function_call;
-non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_term, seq_literal_inner, all_literals, all_types, seq_concat, seq_concat_term, identifier;
+// Literals
+non terminal all_literals, number_literals, dict_literal, seq_literal;
+non terminal dict_literal_inner, seq_literal_term, seq_literal_inner;
+
+// Types
+non terminal all_types, dict_type, seq_type, primitive, identifier;
+
+// Sequence
+non terminal seq_concat, seq_concat_term;
+non terminal program, main;
+
+// Controls
+non terminal conditional_statement, boolean_statement;
+
+// Atoms
+non terminal stmt, expr_list, expr, term;
+
+// User definitions and functions
+non terminal typedef, funcdef, function_call;
+non terminal function_inner, typedef_inner;
 
 // Precedences
 precedence left ASSIGN;
-precedence left PLUS, MINUS;
-precedence left MULT, DIV;
-precedence left EXP;
+precedence left PLUS, MINUS, MULT, DIV, EXP;
 precedence left EQ, LT, GT, LEQ, GEQ, NEQ;
 precedence left AND, OR, IMPLICATION;
-precedence left BOOLEAN_LITERAL;
 
 program ::= main function_inner | function_inner main | function_inner main function_inner | main;
 
@@ -168,15 +182,15 @@ term ::= all_literals
     | function_call
     ;
 
-all_literals ::= INTEGER_LITERAL
-    | MINUS INTEGER_LITERAL
-    | FLOATING_POINT_LITERAL
-    | MINUS FLOATING_POINT_LITERAL
-    | RATIONAL_LITERAL
-    | MINUS RATIONAL_LITERAL
+all_literals ::= number_literals
+    | MINUS number_literals
     | STRING_LITERAL
     | CHARACTER_LITERAL
     | BOOLEAN_LITERAL
+    ;
+number_literals ::= INTEGER_LITERAL
+    | FLOATING_POINT_LITERAL
+    | RATIONAL_LITERAL
     ;
 
 all_types ::= dict_type
