@@ -146,17 +146,17 @@ SingleCharacter = [^\r\n\'\\]
   "main"                         { return symbol("main", sym.MAIN); }
 
   /* Logical Operators */
-  "!"                            { return symbol("not", sym.BUNOP); }
-  "&&"                           { return symbol("and", sym.BBINOP, new Integer( sym.AND )); }
-  "||"                           { return symbol("or", sym.BBINOP, new Integer( sym.OR )); }
-  "=>"                           { return symbol("implies", sym.BBINOP, new Integer( sym.IMPLICATION)); }
+  "!"                            { return symbol("not", sym.NOT); }
+  "&&"                           { return symbol("and", new Integer( sym.AND )); }
+  "||"                           { return symbol("or", new Integer( sym.OR )); }
+  "=>"                           { return symbol("implies", new Integer( sym.IMPLICATION)); }
 
   /* Binary Operators */
-  "+"                            { return symbol("plus", sym.BINOP, new Integer( sym.PLUS )); }
-  "-"                            { return symbol("minus", new Integer( sym.MINUS )); }
-  "*"                            { return symbol("mult", sym.BINOP, new Integer( sym.MULT )); }
-  "/"                            { return symbol("div", sym.BINOP, new Integer( sym.DIV )); }
-  "^"                            { return symbol("exp", sym.BINOP, new Integer( sym.EXP )); }
+  "+"                            { return symbol("plus", sym.PLUS ); }
+  "-"                            { return symbol("minus", sym.MINUS ); }
+  "*"                            { return symbol("mult", sym.MULT ); }
+  "/"                            { return symbol("div", sym.DIV ); }
+  "^"                            { return symbol("exp", sym.EXP ); }
 
   /* Sequence & Dictionary Syntax */
   "in"                           { return symbol("in", sym.IN); }
