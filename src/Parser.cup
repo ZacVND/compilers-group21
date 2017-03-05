@@ -98,6 +98,7 @@ stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
     | function_call SEMICOLON //function calls
     | READ identifier SEMICOLON //input
     | PRINT expr SEMICOLON //output
+    | ALIAS identifier identifier SEMICOLON //alias for custom types
     | ALIAS all_types identifier SEMICOLON //alias
     | ALIAS all_types all_types SEMICOLON //alias
     | BREAK SEMICOLON
