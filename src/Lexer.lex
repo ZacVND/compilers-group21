@@ -153,7 +153,7 @@ SingleCharacter = [^\r\n\'\\]
 
   /* Binary Operators */
   "+"                            { return symbol("plus", sym.BINOP, new Integer( sym.PLUS )); }
-  "-"                            { return symbol("minus", sym.BINOP, new Integer( sym.MINUS )); }
+  "-"                            { return symbol("minus", new Integer( sym.MINUS )); }
   "*"                            { return symbol("mult", sym.BINOP, new Integer( sym.MULT )); }
   "/"                            { return symbol("div", sym.BINOP, new Integer( sym.DIV )); }
   "^"                            { return symbol("exp", sym.BINOP, new Integer( sym.EXP )); }

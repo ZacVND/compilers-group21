@@ -155,6 +155,7 @@ expr_list ::= expr
     ;
 
 expr ::= expr BINOP expr
+    | expr MINUS expr
     | expr BBINOP expr
     | BUNOP expr
     | LPAREN expr RPAREN
