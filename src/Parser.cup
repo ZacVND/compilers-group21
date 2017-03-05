@@ -16,8 +16,8 @@ parser code {:
 
   public void syntax_error(Symbol current_token) {
     syntaxErrors = true;
-    report_error("Syntax error at line " + (current_token.left) + ", column "
-    + current_token.right + ": ", null);
+    report_error("Syntax error at line " + (current_token) + ", column "
+    + current_token + ": ", null);
   }
 
 :};
