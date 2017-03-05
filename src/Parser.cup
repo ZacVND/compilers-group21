@@ -40,7 +40,6 @@ terminal BINOP, BBINOP, BUNOP; // BINOP = binary op, BBINOP = logical op, BUNOP 
 // Logical Operators
 terminal EQ, GT, LT, LEQ, GEQ, NEQ;
 terminal NOT, AND, OR, IMPLICATION;
-terminal COMP;
 
 // Types
 terminal INT, FLOAT, RAT;
@@ -79,7 +78,7 @@ terminal PLUS, MINUS, MULT, DIV, EXP;
 non terminal program;
 non terminal main, function_inner, stmt, expr, expr_list, term, cond, cond_inner, loop;
 non terminal typedef, typedef_inner, funcdef, function_call;
-non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat, identifier;
+non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat, identifier, comp;
 
 
 // Precedences
@@ -142,7 +141,7 @@ cond ::= IF LPAREN cond_inner RPAREN THEN stmt FI
 
 cond_inner ::= BOOLEAN_LITERAL
     | expr BBINOP expr
-    | expr COMP expr
+    | expr comp expr
     | BUNOP cond_inner
     ;
 
@@ -223,4 +222,12 @@ seq_concat ::= identifier COLONCOLON identifier
 
 identifier ::= IDENTIFIER
     | IDENTIFIER DOT identifier
+    ;
+
+comp ::= EQ
+    | GT
+    | LT
+    | LEQ
+    | GEQ
+    | NEQ
     ;

@@ -132,12 +132,12 @@ SingleCharacter = [^\r\n\'\\]
 
   /* OPERATORS */
   /* Comparative Operators */
-  ">"                            { return symbol("gt", sym.COMP, new Integer( sym.GT )); }
-  "<"                            { return symbol("lt", sym.COMP, new Integer( sym.LT )); }
-  "=="                           { return symbol("eq", sym.COMP, new Integer( sym.EQ )); }
-  "<="                           { return symbol("leq", sym.COMP, new Integer( sym.LEQ )); }
-  ">="                           { return symbol("geq", sym.COMP, new Integer( sym.GEQ )); }
-  "!="                           { return symbol("neq", sym.COMP, new Integer( sym.NEQ )); }
+  ">"                            { return symbol("gt", sym.GT ); }
+  "<"                            { return symbol("lt", sym.LT ); }
+  "=="                           { return symbol("eq", sym.EQ ); }
+  "<="                           { return symbol("leq", sym.LEQ ); }
+  ">="                           { return symbol("geq", sym.GEQ ); }
+  "!="                           { return symbol("neq", sym.NEQ ); }
 
   /*Function predicate operator*/
   "?"                            { return symbol("?", sym.QMARK); }
