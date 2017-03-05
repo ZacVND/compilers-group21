@@ -159,6 +159,7 @@ term ::= all_literals
     | seq_literal
     | identifier
     | function_call
+    | expr BBINOP expr
     ;
 
 all_literals ::= INTEGER_LITERAL
