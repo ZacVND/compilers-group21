@@ -90,11 +90,11 @@ precedence left EXP;
 
 program ::= main function_inner | function_inner main | function_inner main function_inner | main;
 
-stmt ::= identifier ASSIGN expr SEMICOLON //assignment
+stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
     | identifier COLON all_types SEMICOLON //declaration
     | identifier COLON identifier SEMICOLON //declaration
-    | identifier COLON all_types ASSIGN expr SEMICOLON //initialisation
-    | identifier COLON identifier ASSIGN expr SEMICOLON //initialisation
+    | identifier COLON all_types ASSIGN expr_list SEMICOLON //initialisation
+    | identifier COLON identifier ASSIGN expr_list SEMICOLON //initialisation
     | function_call SEMICOLON //function calls
     | READ identifier SEMICOLON //input
     | PRINT expr SEMICOLON //output
@@ -186,6 +186,7 @@ dict_type ::= DICT LT primitive COMMA primitive GT
 
 seq_type ::= SEQ LT primitive GT
     | SEQ LT TOP GT
+    | SEQ LT identifier GT
     ;
 
 primitive ::= CHAR
