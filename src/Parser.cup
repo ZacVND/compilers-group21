@@ -68,8 +68,8 @@ terminal PLUS, MINUS, MULT, DIV, EXP;
 
 // Non Terminals
 non terminal program;
-non terminal main, function_inner, stmt, expr, term, cond, cond_inner, loop;
-non terminal typedef, typedef_inner, funcdef;
+non terminal main, function_inner, stmt, expr, expr_list, term, cond, cond_inner, loop;
+non terminal typedef, typedef_inner, funcdef, function_call;
 non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat, identifier;
 
 
@@ -87,6 +87,7 @@ stmt ::= identifier ASSIGN expr SEMICOLON //assignment
     | identifier COLON identifier SEMICOLON //declaration
     | identifier COLON all_types ASSIGN expr SEMICOLON //initialisation
     | identifier COLON identifier ASSIGN expr SEMICOLON //initialisation
+    | function_call SEMICOLON //function calls
     | READ identifier SEMICOLON //input
     | PRINT expr SEMICOLON //output
     | ALIAS all_types identifier SEMICOLON //alias
@@ -121,6 +122,9 @@ funcdef ::= FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RB
     | FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
     ;
 
+function_call ::= QMARK expr QMARK IDENTIFIER LPAREN expr_list RPAREN
+    ;
+
 cond ::= IF LPAREN cond_inner RPAREN THEN stmt FI
     | IF LPAREN cond_inner RPAREN THEN stmt ELSE FI
     ;
@@ -129,6 +133,10 @@ cond_inner ::= BOOLEAN_LITERAL
     | expr BBINOP expr
     | expr BINOP expr
     | BUNOP cond_inner
+    ;
+
+expr_list ::= expr
+    | expr COMMA expr_list
     ;
 
 expr ::= expr BINOP expr
@@ -141,6 +149,7 @@ term ::= all_literals
     | dict_literal
     | seq_literal
     | identifier
+    | function_call
     ;
 
 all_literals ::= INTEGER_LITERAL
