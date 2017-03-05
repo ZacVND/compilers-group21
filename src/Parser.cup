@@ -78,7 +78,7 @@ terminal PLUS, MINUS, MULT, DIV, EXP;
 non terminal program;
 non terminal main, function_inner, stmt, expr, expr_list, term, cond, cond_inner, loop;
 non terminal typedef, typedef_inner, funcdef, function_call;
-non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat, seq_concat_term, identifier, comp;
+non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_term, seq_literal_inner, all_literals, all_types, seq_concat, seq_concat_term, identifier, comp;
 
 
 // Precedences
@@ -204,10 +204,15 @@ dict_literal_inner ::= all_literals COLON all_literals
     ;
 
 seq_literal ::= LBRACK seq_literal_inner RBRACK
-    | LBRACK all_literals COLON all_literals RBRACK
-    | LBRACK all_literals COLON RBRACK
-    | LBRACK COLON all_literals RBRACK
+    | LBRACK seq_literal_term COLON seq_literal_term RBRACK
+    | LBRACK seq_literal_term COLON RBRACK
+    | LBRACK COLON seq_literal_term RBRACK
+    | identifier seq_literal
     | LBRACK RBRACK
+    ;
+
+seq_literal_term ::= identifier
+    | all_literals
     ;
 
 seq_literal_inner ::= all_literals
