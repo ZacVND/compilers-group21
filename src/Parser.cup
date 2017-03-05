@@ -116,7 +116,7 @@ function_inner ::= stmt
     | function_inner stmt
     ;
 
-loop ::= LOOP stmt POOL
+loop ::= LOOP function_inner POOL
     ;
 
 typedef ::= TDEF identifier LBRACE typedef_inner RBRACE SEMICOLON
