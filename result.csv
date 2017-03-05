@@ -1,0 +1,153 @@
+
+tests/open/n-c-style-if.s
+Syntax error at line 47, column 47: Couldn't repair and continue parse for input symbol "{" spanning from unknown:2/16(46) to unknown:2/16(47)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-decl-after-statements.s
+Syntax error at line 164, column 164: Couldn't repair and continue parse for input symbol "[" spanning from unknown:9/8(163) to unknown:9/8(164)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-empty-else.s
+Syntax error at line 346, column 347: Couldn't repair and continue parse for input symbol "fi" spanning from unknown:19/10(345) to unknown:19/11(347)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-empty-main.s
+Syntax error at line 27, column 27: Couldn't repair and continue parse for input symbol "}" spanning from unknown:7/3(26) to unknown:7/3(27)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-func-para-type-error0.s
+Syntax error at line 17, column 19: Couldn't repair and continue parse for input symbol "int" spanning from unknown:1/17(16) to unknown:1/19(19)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-func-return-type.s
+Syntax error at line 66, column 66: Couldn't repair and continue parse for input symbol ":" spanning from unknown:6/25(65) to unknown:6/25(66)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-main-missing-brace.s
+Syntax error at line 12, column 17: Couldn't repair and continue parse for input symbol "return" spanning from unknown:2/3(11) to unknown:2/8(17)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-main-return.s
+Syntax error at line 90, column 90: Couldn't repair and continue parse for input symbol ":" spanning from unknown:7/3(89) to unknown:7/3(90)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-multiple-assignment.s
+Syntax error at line 55, column 56: Couldn't repair and continue parse for input symbol ":=" spanning from unknown:5/10(54) to unknown:5/11(56)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-nested-type-def0.s
+Syntax error at line 18, column 20: Couldn't repair and continue parse for input symbol "seq" spanning from unknown:2/11(17) to unknown:2/13(20)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-no-main.s
+Syntax error at line 380, column 380: Couldn't repair and continue parse for input symbol "EOF" spanning from unknown:29/1(379) to unknown:29/1(380)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-stray-return.s
+Syntax error at line 148, column 148: Couldn't repair and continue parse for input symbol "(" spanning from unknown:14/16(147) to unknown:14/16(148)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/n-two-else.s
+Syntax error at line 259, column 259: Couldn't repair and continue parse for input symbol "[" spanning from unknown:10/23(258) to unknown:10/23(259)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/p-adt.s
+parsing successful
+tests/open/p-alice.s
+parsing successful
+tests/open/p-empty-dict.s
+parsing successful
+tests/open/p-empty-seq.s
+parsing successful
+tests/open/p-fib.s
+Syntax error at line 175, column 176: Couldn't repair and continue parse for input symbol "Intconst" spanning from unknown:13/25(174) to unknown:13/26(176)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/p-fp0.s
+parsing successful
+tests/open/p-function0.s
+Syntax error at line 102, column 102: Couldn't repair and continue parse for input symbol "eq" spanning from unknown:7/21(101) to unknown:7/21(102)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/p-if-then-else0.s
+Syntax error at line 67, column 72: Couldn't repair and continue parse for input symbol "return" spanning from unknown:5/3(66) to unknown:5/8(72)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/p-if-then-else1.s
+Syntax error at line 67, column 68: Couldn't repair and continue parse for input symbol "if" spanning from unknown:5/3(66) to unknown:5/4(68)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/p-imply.s
+parsing successful
+tests/open/p-main0.s
+parsing successful
+tests/open/p-nested-loops.s
+parsing successful
+tests/open/p-rat0.s
+parsing successful
+tests/open/p-return0.s
+parsing successful
+tests/open/p-return1.s
+parsing successful
+tests/open/p-reverse.s
+parsing successful
+tests/open/p-sequences.s
+Syntax error at line 277, column 277: Couldn't repair and continue parse for input symbol "eq" spanning from unknown:13/27(276) to unknown:13/27(277)
+java.lang.Exception: Can't recover from previous error(s)
+	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
+	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
+	at SC.main(SC.java:15)
+tests/open/p-tdef0.s
+parsing successful
