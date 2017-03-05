@@ -17,7 +17,7 @@ parser code {:
   public void syntax_error(Symbol current_token) {
     syntaxErrors = true;
     report_error("Syntax error at line " + (current_token.left+1) + ", column "
-    + current_token.right + "\n", null);
+    + current_token.right + ": ", null);
   }
 
 :};
@@ -78,7 +78,7 @@ terminal PLUS, MINUS, MULT, DIV, EXP;
 non terminal program;
 non terminal main, function_inner, stmt, expr, expr_list, term, cond, cond_inner, loop;
 non terminal typedef, typedef_inner, funcdef, function_call;
-non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat, identifier, comp;
+non terminal dict_type, seq_type, primitive, dict_literal, dict_literal_inner, seq_literal, seq_literal_inner, all_literals, all_types, seq_concat, seq_concat_term, identifier, comp;
 
 
 // Precedences
@@ -99,6 +99,7 @@ stmt ::= identifier ASSIGN expr SEMICOLON //assignment
     | READ identifier SEMICOLON //input
     | PRINT expr SEMICOLON //output
     | ALIAS all_types identifier SEMICOLON //alias
+    | ALIAS all_types all_types SEMICOLON //alias
     | BREAK
     | typedef
     | funcdef
@@ -212,12 +213,14 @@ seq_literal_inner ::= all_literals
     | all_literals COMMA seq_literal_inner
     ;
 
-seq_concat ::= identifier COLONCOLON identifier
-    | identifier COLONCOLON all_literals
-    | all_literals COLONCOLON identifier
-    | all_literals COLONCOLON all_literals
-    | identifier COLONCOLON seq_concat
-    | all_literals COLONCOLON seq_concat
+seq_concat ::= seq_concat_term COLONCOLON seq_concat_term
+    | seq_concat_term COLONCOLON seq_concat
+    ;
+
+seq_concat_term ::= identifier
+    | all_literals
+    | seq_literal
+    | dict_literal
     ;
 
 identifier ::= IDENTIFIER
