@@ -63,7 +63,7 @@ java.lang.Exception: Can't recover from previous error(s)
 	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
 	at SC.main(SC.java:15)
 tests/open/n-nested-type-def0.s
-Syntax error at line 18, column 20: Couldn't repair and continue parse for input symbol "seq" spanning from unknown:2/11(17) to unknown:2/13(20)
+Syntax error at line 26, column 26: Couldn't repair and continue parse for input symbol "semicolon" spanning from unknown:2/19(25) to unknown:2/19(26)
 java.lang.Exception: Can't recover from previous error(s)
 	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
 	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
@@ -99,7 +99,7 @@ parsing successful
 tests/open/p-empty-seq.s
 parsing successful
 tests/open/p-fib.s
-Syntax error at line 175, column 176: Couldn't repair and continue parse for input symbol "Intconst" spanning from unknown:13/25(174) to unknown:13/26(176)
+Syntax error at line 174, column 174: Couldn't repair and continue parse for input symbol "minus" spanning from unknown:13/24(173) to unknown:13/24(174)
 java.lang.Exception: Can't recover from previous error(s)
 	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
 	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
@@ -108,21 +108,16 @@ java.lang.Exception: Can't recover from previous error(s)
 tests/open/p-fp0.s
 parsing successful
 tests/open/p-function0.s
-Syntax error at line 102, column 102: Couldn't repair and continue parse for input symbol "eq" spanning from unknown:7/21(101) to unknown:7/21(102)
-java.lang.Exception: Can't recover from previous error(s)
-	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
-	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
-	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
-	at SC.main(SC.java:15)
+parsing successful
 tests/open/p-if-then-else0.s
-Syntax error at line 67, column 72: Couldn't repair and continue parse for input symbol "return" spanning from unknown:5/3(66) to unknown:5/8(72)
+Syntax error at line 115, column 115: Couldn't repair and continue parse for input symbol "minus" spanning from unknown:7/28(114) to unknown:7/28(115)
 java.lang.Exception: Can't recover from previous error(s)
 	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
 	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
 	at java_cup.runtime.lr_parser.parse(lr_parser.java:731)
 	at SC.main(SC.java:15)
 tests/open/p-if-then-else1.s
-Syntax error at line 67, column 68: Couldn't repair and continue parse for input symbol "if" spanning from unknown:5/3(66) to unknown:5/4(68)
+Syntax error at line 184, column 184: Couldn't repair and continue parse for input symbol "minus" spanning from unknown:14/19(183) to unknown:14/19(184)
 java.lang.Exception: Can't recover from previous error(s)
 	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
 	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
@@ -143,7 +138,7 @@ parsing successful
 tests/open/p-reverse.s
 parsing successful
 tests/open/p-sequences.s
-Syntax error at line 277, column 277: Couldn't repair and continue parse for input symbol "eq" spanning from unknown:13/27(276) to unknown:13/27(277)
+Syntax error at line 405, column 405: Couldn't repair and continue parse for input symbol "minus" spanning from unknown:19/24(404) to unknown:19/24(405)
 java.lang.Exception: Can't recover from previous error(s)
 	at java_cup.runtime.lr_parser.report_fatal_error(lr_parser.java:392)
 	at java_cup.runtime.lr_parser.unrecovered_syntax_error(lr_parser.java:539)
