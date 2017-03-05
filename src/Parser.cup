@@ -188,26 +188,17 @@ all_literals ::= number_literals
     | CHARACTER_LITERAL
     | BOOLEAN_LITERAL
     ;
+
 number_literals ::= INTEGER_LITERAL
     | FLOATING_POINT_LITERAL
     | RATIONAL_LITERAL
     ;
 
-all_types ::= dict_type
-    | seq_type
+all_types ::= DICT LT all_types COMMA all_types GT  // Dict Type
+    | SEQ LT all_types GT  // Seq Type
     | primitive
     | identifier
-    ;
-
-dict_type ::= DICT LT primitive COMMA primitive GT
-    | DICT LT TOP COMMA TOP GT
-    | DICT LT TOP COMMA primitive GT
-    | DICT LT primitive COMMA TOP GT
-    ;
-
-seq_type ::= SEQ LT primitive GT
-    | SEQ LT TOP GT
-    | SEQ LT identifier GT
+    | TOP
     ;
 
 primitive ::= CHAR
