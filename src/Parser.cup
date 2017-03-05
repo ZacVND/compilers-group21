@@ -211,6 +211,8 @@ seq_literal ::= LBRACK seq_literal_inner RBRACK
     ;
 
 seq_literal_inner ::= all_literals
+    | identifier
+    | identifier COMMA seq_literal_inner
     | all_literals COMMA seq_literal_inner
     ;
 
