@@ -128,13 +128,14 @@ SingleCharacter = [^\r\n\'\\]
   "]"                            { return symbol("]", sym.RBRACK); }
   ";"                            { return symbol("semicolon", sym.SEMICOLON); }
   ","                            { return symbol("comma", sym.COMMA); }
-  ":="                            { return symbol(":=", sym.ASSIGN); }
+  ":="                           { return symbol(":=", sym.ASSIGN); }
+  "."                            { return symbol("dot", sym.DOT); }
 
   /* OPERATORS */
   /* Comparative Operators */
   ">"                            { return symbol("gt", sym.GT ); }
   "<"                            { return symbol("lt", sym.LT ); }
-  "=="                           { return symbol("eq", sym.EQ ); }
+  "="                           { return symbol("eq", sym.EQ ); }
   "<="                           { return symbol("leq", sym.LEQ ); }
   ">="                           { return symbol("geq", sym.GEQ ); }
   "!="                           { return symbol("neq", sym.NEQ ); }

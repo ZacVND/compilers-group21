@@ -132,19 +132,22 @@ typedef_inner ::= identifier COLON identifier
 
 funcdef ::= FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE
     | FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
+    | FDEF identifier LPAREN RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
+    | FDEF identifier LPAREN RPAREN LBRACE function_inner RBRACE SEMICOLON
     ;
 
 function_call ::= QMARK expr QMARK IDENTIFIER LPAREN expr_list RPAREN
     ;
 
 cond ::= IF LPAREN cond_inner RPAREN THEN stmt FI
-    | IF LPAREN cond_inner RPAREN THEN stmt ELSE FI
+    | IF LPAREN cond_inner RPAREN THEN stmt ELSE LPAREN stmt RPAREN FI
     ;
 
 cond_inner ::= BOOLEAN_LITERAL
     | expr BBINOP expr
     | expr comp expr
     | BUNOP cond_inner
+    | identifier IN identifier
     ;
 
 expr_list ::= expr
@@ -245,3 +248,4 @@ comp ::= EQ
     | GEQ
     | NEQ
     ;
+
