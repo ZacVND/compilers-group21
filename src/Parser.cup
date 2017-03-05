@@ -5,7 +5,7 @@ import java_cup.runtime.*;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 
 parser code {:
-  public boolean syntaxErrors;
+  public boolean syntaxErrors = false;
 
   Lexer lexer;
 
@@ -13,6 +13,12 @@ parser code {:
     super(lex,sf);
     lexer = lex;
   }
+
+  public void syntax_error(Symbol cur_token){
+  	System.err.println("Syntax error at "+cur_token);
+  }
+
+
 :};
 
 terminal IN;
@@ -25,6 +31,7 @@ terminal LOOP, POOL;
 terminal IF, THEN, FI;
 terminal BREAK, ELSE;  // Conditional Statements - Control
 terminal BINOP, BBINOP, BUNOP; // BINOP = binary op, BBINOP = logical op, BUNOP = unary op
+terminal RETURN;
 
 // Logical Operators
 terminal EQ, GT, LT, LEQ, GEQ, NEQ;
@@ -37,7 +44,7 @@ terminal QMARK;
 terminal INT, FLOAT, RAT;
 terminal SEQ, DICT;
 terminal BOOLEAN;
-terminal CHAR;
+terminal CHAR, STRING;
 terminal TOP;
 
 // Definitions
@@ -94,6 +101,7 @@ stmt ::= IDENTIFIER ASSIGN expr SEMICOLON //assignment
     | funcdef
     | cond //conditional - if then, if then else
     | loop
+    | RETURN SEMICOLON
     ;
 
 main ::= MAIN LBRACE function_inner RBRACE SEMICOLON
@@ -169,6 +177,7 @@ primitive ::= CHAR
     | FLOAT
     | RAT
     | BOOLEAN
+    | STRING
     ;
 
 dict_literal ::= LBRACE dict_literal_inner RBRACE

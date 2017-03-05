@@ -6,71 +6,73 @@
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int SEQ = 31;
-  public static final int STRING_LITERAL = 47;
-  public static final int MULT = 62;
-  public static final int CHAR = 34;
+  public static final int SEQ = 32;
+  public static final int STRING_LITERAL = 49;
+  public static final int MULT = 64;
+  public static final int CHAR = 35;
   public static final int POOL = 6;
   public static final int BUNOP = 14;
-  public static final int LPAREN = 49;
-  public static final int INT = 28;
-  public static final int MINUS = 61;
+  public static final int LPAREN = 51;
+  public static final int INT = 29;
+  public static final int MINUS = 63;
   public static final int BINOP = 12;
-  public static final int RPAREN = 50;
-  public static final int BOOLEAN_LITERAL = 42;
+  public static final int RPAREN = 52;
+  public static final int BOOLEAN_LITERAL = 44;
   public static final int BBINOP = 13;
-  public static final int SEMICOLON = 55;
-  public static final int CHARACTER_LITERAL = 48;
-  public static final int IMPLICATION = 24;
-  public static final int NOT = 21;
-  public static final int AND = 22;
-  public static final int LT = 17;
-  public static final int TYPE = 25;
-  public static final int TDEF = 36;
+  public static final int SEMICOLON = 57;
+  public static final int CHARACTER_LITERAL = 50;
+  public static final int IMPLICATION = 25;
+  public static final int NOT = 22;
+  public static final int AND = 23;
+  public static final int LT = 18;
+  public static final int TYPE = 26;
+  public static final int TDEF = 38;
   public static final int IN = 2;
-  public static final int OR = 23;
-  public static final int COMMA = 56;
-  public static final int QMARK = 27;
+  public static final int OR = 24;
+  public static final int COMMA = 58;
+  public static final int QMARK = 28;
   public static final int FI = 9;
-  public static final int COMP = 26;
-  public static final int DIV = 63;
-  public static final int RAT = 30;
-  public static final int GEQ = 19;
-  public static final int PLUS = 60;
+  public static final int COMP = 27;
+  public static final int DIV = 65;
+  public static final int RAT = 31;
+  public static final int GEQ = 20;
+  public static final int PLUS = 62;
   public static final int LOOP = 5;
-  public static final int NULL_LITERAL = 43;
-  public static final int ASSIGN = 41;
-  public static final int MAIN = 39;
+  public static final int NULL_LITERAL = 45;
+  public static final int ASSIGN = 43;
+  public static final int MAIN = 41;
   public static final int IF = 7;
-  public static final int EXP = 64;
-  public static final int DOT = 57;
+  public static final int EXP = 66;
+  public static final int DOT = 59;
   public static final int EOF = 0;
-  public static final int BOOLEAN = 33;
+  public static final int BOOLEAN = 34;
+  public static final int RETURN = 15;
   public static final int error = 1;
-  public static final int NEQ = 20;
-  public static final int FDEF = 37;
+  public static final int NEQ = 21;
+  public static final int FDEF = 39;
   public static final int BREAK = 10;
-  public static final int RATIONAL_LITERAL = 46;
-  public static final int EQ = 15;
-  public static final int COLONCOLON = 59;
-  public static final int LBRACK = 53;
-  public static final int TOP = 35;
-  public static final int COLON = 58;
-  public static final int LBRACE = 51;
-  public static final int FLOATING_POINT_LITERAL = 45;
-  public static final int DICT = 32;
+  public static final int RATIONAL_LITERAL = 48;
+  public static final int EQ = 16;
+  public static final int COLONCOLON = 61;
+  public static final int LBRACK = 55;
+  public static final int TOP = 37;
+  public static final int COLON = 60;
+  public static final int LBRACE = 53;
+  public static final int FLOATING_POINT_LITERAL = 47;
+  public static final int DICT = 33;
   public static final int ELSE = 11;
-  public static final int RBRACK = 54;
+  public static final int RBRACK = 56;
   public static final int READ = 3;
-  public static final int FLOAT = 29;
-  public static final int RBRACE = 52;
+  public static final int FLOAT = 30;
+  public static final int RBRACE = 54;
   public static final int THEN = 8;
-  public static final int LEQ = 18;
-  public static final int ALIAS = 38;
-  public static final int GT = 16;
+  public static final int LEQ = 19;
+  public static final int STRING = 36;
+  public static final int ALIAS = 40;
+  public static final int GT = 17;
   public static final int PRINT = 4;
-  public static final int INTEGER_LITERAL = 44;
-  public static final int IDENTIFIER = 40;
+  public static final int INTEGER_LITERAL = 46;
+  public static final int IDENTIFIER = 42;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -87,6 +89,7 @@ public class sym {
   "BINOP",
   "BBINOP",
   "BUNOP",
+  "RETURN",
   "EQ",
   "GT",
   "LT",
@@ -107,6 +110,7 @@ public class sym {
   "DICT",
   "BOOLEAN",
   "CHAR",
+  "STRING",
   "TOP",
   "TDEF",
   "FDEF",

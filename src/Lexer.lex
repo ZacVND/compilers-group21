@@ -75,6 +75,19 @@ SingleCharacter = [^\r\n\'\\]
 %%
 
 <YYINITIAL> {
+    /* Keywords for Datatypes*/
+      "top"                         { return symbol("top", new Integer( sym.TOP )); }
+      "int"                         { return symbol("int", new Integer( sym.INT  )); }
+      "rat"                         { return symbol("rat", new Integer( sym.RAT )); }
+      "float"                       { return symbol("float", new Integer( sym.FLOAT )); }
+      "boolean"                     { return symbol("bool", new Integer( sym.BOOLEAN )); }
+      "char"                        { return symbol("char", new Integer( sym.CHAR )); }
+      "seq"                         { return symbol("seq", new Integer( sym.SEQ )); }
+      "dict"                        { return symbol("dict", new Integer( sym.DICT )); }
+      "string"                      { return symbol("string", sym.STRING); }
+}
+
+<YYINITIAL> {
 
   /* Keywords for Standard IO */
   "read"                        { return symbol("read", sym.READ); }
@@ -88,17 +101,7 @@ SingleCharacter = [^\r\n\'\\]
   "fi"                          { return symbol("fi", sym.FI); }
   "then"                        { return symbol("then", sym.THEN); }
   "else"                        { return symbol("else", sym.ELSE); }
-
-  /* Keywords for Datatypes*/
-  "top"                         { return symbol("top", sym.TYPE, new Integer( sym.TOP )); }
-  "int"                         { return symbol("int", sym.TYPE, new Integer( sym.INT )); }
-  "rat"                         { return symbol("rat", sym.TYPE, new Integer( sym.RAT )); }
-  "float"                       { return symbol("float", sym.TYPE, new Integer( sym.FLOAT )); }
-  "boolean"                     { return symbol("bool", sym.TYPE, new Integer( sym.BOOLEAN )); }
-  "char"                        { return symbol("char", sym.TYPE, new Integer( sym.CHAR )); }
-  "seq"                         { return symbol("seq", sym.TYPE, new Integer( sym.SEQ )); }
-  "dict"                        { return symbol("dict", sym.TYPE, new Integer( sym.DICT )); }
-
+  "return"                      { return symbol("return", sym.RETURN); }
 
   /* LITERALS */
 
@@ -117,6 +120,8 @@ SingleCharacter = [^\r\n\'\\]
   /* Float Literal */
   {FloatLiteral} { return symbol("Floatconst", sym.FLOATING_POINT_LITERAL, yytext()); }
 
+
+
   /* separators & assignment */
   "("                            { return symbol("(", sym.LPAREN); }
   ")"                            { return symbol(")", sym.RPAREN); }
@@ -124,33 +129,33 @@ SingleCharacter = [^\r\n\'\\]
   "}"                            { return symbol("}", sym.RBRACE); }
   "["                            { return symbol("[", sym.LBRACK); }
   "]"                            { return symbol("]", sym.RBRACK); }
-  ";"                            { return symbol("semicolon", sym.SEMICOLON); }
+  ";"                            { return symbol("semicolon", new Integer( sym.SEMICOLON )); }
   ","                            { return symbol("comma", sym.COMMA); }
   ":="                            { return symbol(":=", sym.ASSIGN); }
 
   /* OPERATORS */
   /* Comparative Operators */
-  ">"                            { return symbol("gt", sym.COMP, new Integer( sym.GT )); }
-  "<"                            { return symbol("lt", sym.COMP, new Integer( sym.LT )); }
-  "=="                           { return symbol("eq", sym.COMP, new Integer( sym.EQ )); }
-  "<="                           { return symbol("leq", sym.COMP, new Integer( sym.LEQ )); }
-  ">="                           { return symbol("geq", sym.COMP, new Integer( sym.GEQ )); }
-  "!="                           { return symbol("neq", sym.COMP, new Integer( sym.NEQ )); }
-  "?"                            { return symbol("?", sym.COMP, new Integer( sym.QMARK )); }
+  ">"                            { return symbol("gt", new Integer( sym.GT )); }
+  "<"                            { return symbol("lt", new Integer( sym.LT )); }
+  "=="                           { return symbol("eq", new Integer( sym.EQ )); }
+  "<="                           { return symbol("leq", new Integer( sym.LEQ )); }
+  ">="                           { return symbol("geq", new Integer( sym.GEQ )); }
+  "!="                           { return symbol("neq", new Integer( sym.NEQ )); }
+  "?"                            { return symbol("?", new Integer( sym.QMARK )); }
   "main"                         { return symbol("main", sym.MAIN); }
 
   /* Logical Operators */
   "!"                            { return symbol("not", sym.BUNOP); }
-  "&&"                           { return symbol("and", sym.BBINOP, new Integer( sym.AND )); }
-  "||"                           { return symbol("or", sym.BBINOP, new Integer( sym.OR )); }
-  "=>"                           { return symbol("implies", sym.BBINOP, new Integer( sym.IMPLICATION)); }
+  "&&"                           { return symbol("and", new Integer( sym.AND )); }
+  "||"                           { return symbol("or", new Integer( sym.OR )); }
+  "=>"                           { return symbol("implies", new Integer( sym.IMPLICATION)); }
 
   /* Binary Operators */
-  "+"                            { return symbol("plus", sym.BINOP, new Integer( sym.PLUS )); }
-  "-"                            { return symbol("minus", sym.BINOP, new Integer( sym.MINUS )); }
-  "*"                            { return symbol("mult", sym.BINOP, new Integer( sym.MULT )); }
-  "/"                            { return symbol("div", sym.BINOP, new Integer( sym.DIV )); }
-  "^"                            { return symbol("exp", sym.BINOP, new Integer( sym.EXP )); }
+  "+"                            { return symbol("plus", new Integer( sym.PLUS )); }
+  "-"                            { return symbol("minus", new Integer( sym.MINUS )); }
+  "*"                            { return symbol("mult", new Integer( sym.MULT )); }
+  "/"                            { return symbol("div", new Integer( sym.DIV )); }
+  "^"                            { return symbol("exp", new Integer( sym.EXP )); }
 
   /* Sequence & Dictionary Syntax */
   "in"                           { return symbol("in", sym.IN); }
@@ -169,7 +174,7 @@ SingleCharacter = [^\r\n\'\\]
   \'                             { yybegin(CHAR); }
 
   /* identifiers */
-  {Identifier}                   { return symbol("Identifier", sym.IDENTIFIER, yytext()); }
+  {Identifier}                   { return symbol("Identifier", new Integer( sym.IDENTIFIER ), yytext()); }
 
   /* comments */
   {Comment}                      { /* ignore */ }
