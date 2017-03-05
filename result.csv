@@ -2,44 +2,31 @@
 tests/open/n-c-style-if.s
 tests/open/n-decl-after-statements.s
 tests/open/n-empty-else.s
-Syntax error at line 163, column 164
-Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:7/25(162) to unknown:7/26(164)
+Syntax error at line 163, column 164: Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:7/25(162) to unknown:7/26(164)
 tests/open/n-empty-main.s
-Syntax error at line 27, column 27
-Couldn't repair and continue parse for input symbol "}" spanning from unknown:7/3(26) to unknown:7/3(27)
+Syntax error at line 27, column 27: Couldn't repair and continue parse for input symbol "}" spanning from unknown:7/3(26) to unknown:7/3(27)
 tests/open/n-func-para-type-error0.s
-Syntax error at line 17, column 19
-Couldn't repair and continue parse for input symbol "int" spanning from unknown:1/17(16) to unknown:1/19(19)
+Syntax error at line 17, column 19: Couldn't repair and continue parse for input symbol "int" spanning from unknown:1/17(16) to unknown:1/19(19)
 tests/open/n-func-return-type.s
-Syntax error at line 66, column 66
-Couldn't repair and continue parse for input symbol ":" spanning from unknown:6/25(65) to unknown:6/25(66)
+Syntax error at line 66, column 66: Couldn't repair and continue parse for input symbol ":" spanning from unknown:6/25(65) to unknown:6/25(66)
 tests/open/n-main-missing-brace.s
-Syntax error at line 12, column 17
-Couldn't repair and continue parse for input symbol "return" spanning from unknown:2/3(11) to unknown:2/8(17)
+Syntax error at line 12, column 17: Couldn't repair and continue parse for input symbol "return" spanning from unknown:2/3(11) to unknown:2/8(17)
 tests/open/n-main-return.s
-Syntax error at line 90, column 90
-Couldn't repair and continue parse for input symbol ":" spanning from unknown:7/3(89) to unknown:7/3(90)
+Syntax error at line 90, column 90: Couldn't repair and continue parse for input symbol ":" spanning from unknown:7/3(89) to unknown:7/3(90)
 tests/open/n-multiple-assignment.s
-Syntax error at line 55, column 56
-Couldn't repair and continue parse for input symbol ":=" spanning from unknown:5/10(54) to unknown:5/11(56)
+Syntax error at line 55, column 56: Couldn't repair and continue parse for input symbol ":=" spanning from unknown:5/10(54) to unknown:5/11(56)
 tests/open/n-nested-type-def0.s
-Syntax error at line 18, column 20
-Couldn't repair and continue parse for input symbol "seq" spanning from unknown:2/11(17) to unknown:2/13(20)
+Syntax error at line 18, column 20: Couldn't repair and continue parse for input symbol "seq" spanning from unknown:2/11(17) to unknown:2/13(20)
 tests/open/n-no-main.s
-Syntax error at line 17, column 22
-Couldn't repair and continue parse for input symbol "string" spanning from unknown:1/17(16) to unknown:1/22(22)
+Syntax error at line 104, column 105: Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:5/25(103) to unknown:5/26(105)
 tests/open/n-stray-return.s
-Syntax error at line 148, column 148
-Couldn't repair and continue parse for input symbol "(" spanning from unknown:14/16(147) to unknown:14/16(148)
+Syntax error at line 148, column 148: Couldn't repair and continue parse for input symbol "(" spanning from unknown:14/16(147) to unknown:14/16(148)
 tests/open/n-two-else.s
-Syntax error at line 163, column 164
-Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:7/25(162) to unknown:7/26(164)
+Syntax error at line 163, column 164: Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:7/25(162) to unknown:7/26(164)
 tests/open/p-adt.s
-Syntax error at line 132, column 137
-Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:4/57(131) to unknown:4/62(137)
+Syntax error at line 132, column 137: Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:4/57(131) to unknown:4/62(137)
 tests/open/p-alice.s
-Syntax error at line 163, column 164
-Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:7/25(162) to unknown:7/26(164)
+Syntax error at line 163, column 164: Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:7/25(162) to unknown:7/26(164)
 tests/open/p-empty-dict.s
 parsing successful
 tests/open/p-empty-seq.s
@@ -55,8 +42,7 @@ parsing successful
 tests/open/p-main0.s
 parsing successful
 tests/open/p-nested-loops.s
-Syntax error at line 128, column 128
-Couldn't repair and continue parse for input symbol "semicolon" spanning from unknown:8/9(127) to unknown:8/9(128)
+Syntax error at line 128, column 128: Couldn't repair and continue parse for input symbol "semicolon" spanning from unknown:8/9(127) to unknown:8/9(128)
 tests/open/p-rat0.s
 parsing successful
 tests/open/p-return0.s
@@ -65,8 +51,6 @@ tests/open/p-return1.s
 parsing successful
 tests/open/p-reverse.s
 tests/open/p-sequences.s
-Syntax error at line 183, column 184
-Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:10/28(182) to unknown:10/29(184)
+Syntax error at line 183, column 184: Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:10/28(182) to unknown:10/29(184)
 tests/open/p-tdef0.s
-Syntax error at line 25, column 30
-Couldn't repair and continue parse for input symbol "string" spanning from unknown:2/18(24) to unknown:2/23(30)
+Syntax error at line 40, column 43: Couldn't repair and continue parse for input symbol "Identifier" spanning from unknown:3/8(39) to unknown:3/11(43)
