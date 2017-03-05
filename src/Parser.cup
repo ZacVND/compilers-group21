@@ -135,7 +135,7 @@ typedef_inner ::= identifier COLON all_types
     | identifier COLON all_types COMMA typedef_inner
     ;
 
-funcdef ::= FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE
+funcdef ::= FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE SEMICOLON
     | FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
     | FDEF identifier LPAREN RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
     | FDEF identifier LPAREN RPAREN LBRACE function_inner RBRACE SEMICOLON
