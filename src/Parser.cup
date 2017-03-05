@@ -152,6 +152,7 @@ expr_list ::= expr
     ;
 
 expr ::= expr BINOP expr
+    | expr MINUS expr
     | expr BBINOP expr
     | BUNOP expr
     | LPAREN expr RPAREN
@@ -167,8 +168,11 @@ term ::= all_literals
     ;
 
 all_literals ::= INTEGER_LITERAL
+    | MINUS INTEGER_LITERAL
     | FLOATING_POINT_LITERAL
+    | MINUS FLOATING_POINT_LITERAL
     | RATIONAL_LITERAL
+    | MINUS RATIONAL_LITERAL
     | STRING_LITERAL
     | CHARACTER_LITERAL
     | BOOLEAN_LITERAL
@@ -201,6 +205,7 @@ primitive ::= CHAR
 dict_literal ::= LBRACE dict_literal_inner RBRACE
     | LBRACE RBRACE
     ;
+
 
 dict_literal_inner ::= all_literals COLON all_literals
     | all_literals COLON all_literals COMMA dict_literal_inner

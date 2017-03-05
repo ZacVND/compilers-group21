@@ -58,9 +58,9 @@ SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 Identifier = [a-zA-Z][a-zA-Z0-9_]*
 
 /* Literal Components */
-IntLiteral = 0 | {PInt} | "-" {PInt}
-FloatLiteral  = -? [0-9]+ \. [0-9]+
-RatLiteral = -? {PInt} "_" {PInt} "/" {PInt} | -? {PInt} "/" {PInt}
+IntLiteral = 0 | {PInt}
+FloatLiteral  = [0-9]+ \. [0-9]+
+RatLiteral = {PInt} "_" {PInt} "/" {PInt} | {PInt} "/" {PInt}
 BoolLiteral = "T" | "F"
 NullLiteral = "null"
 
@@ -152,7 +152,7 @@ SingleCharacter = [^\r\n\'\\]
 
   /* Binary Operators */
   "+"                            { return symbol("plus", sym.BINOP, new Integer( sym.PLUS )); }
-  "-"                            { return symbol("minus", sym.BINOP, new Integer( sym.MINUS )); }
+  "-"                            { return symbol("minus", new Integer( sym.MINUS )); }
   "*"                            { return symbol("mult", sym.BINOP, new Integer( sym.MULT )); }
   "/"                            { return symbol("div", sym.BINOP, new Integer( sym.DIV )); }
   "^"                            { return symbol("exp", sym.BINOP, new Integer( sym.EXP )); }
