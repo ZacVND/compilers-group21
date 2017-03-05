@@ -58,9 +58,9 @@ SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 Identifier = [a-zA-Z][a-zA-Z0-9_]*
 
 /* Literal Components */
-IntLiteral = 0 | {PInt} | "-" {PInt}
-FloatLiteral  = -? [0-9]+ \. [0-9]+
-RatLiteral = -? {PInt} "_" {PInt} "/" {PInt} | -? {PInt} "/" {PInt}
+IntLiteral = 0 | {PInt}
+FloatLiteral  = [0-9]+ \. [0-9]+
+RatLiteral = {PInt} "_" {PInt} "/" {PInt} | {PInt} "/" {PInt}
 BoolLiteral = "T" | "F"
 NullLiteral = "null"
 
