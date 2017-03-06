@@ -80,7 +80,7 @@ non terminal all_literals, number_literals, dict_literal, seq_literal;
 non terminal dict_literal_inner, seq_literal_term, seq_literal_inner;
 
 // Types
-non terminal all_types, dict_type, seq_type, primitive, identifier;
+non terminal all_types, primitive, identifier;
 
 // Sequence
 non terminal seq_concat, seq_concat_term;
@@ -167,7 +167,6 @@ expr_list ::= boolean_statement
     ;
 
 expr ::= term
-    | identifier
     | LPAREN expr RPAREN
     | seq_concat
     | expr PLUS expr
@@ -188,6 +187,7 @@ all_literals ::= number_literals
     | STRING_LITERAL
     | CHARACTER_LITERAL
     | BOOLEAN_LITERAL
+    | identifier
     ;
 
 number_literals ::= INTEGER_LITERAL
@@ -220,20 +220,17 @@ dict_literal_inner ::= all_literals COLON all_literals
     ;
 
 seq_literal ::= LBRACK seq_literal_inner RBRACK
-    | LBRACK seq_literal_term COLON seq_literal_term RBRACK
-    | LBRACK seq_literal_term COLON RBRACK
-    | LBRACK COLON seq_literal_term RBRACK
+    | LBRACK all_literals COLON seq_literal_term RBRACK
+    | LBRACK all_literals COLON RBRACK
+    | LBRACK COLON all_literals RBRACK
     | identifier seq_literal
     | LBRACK RBRACK
+    | LBRACK RBRACK seq_literal // [][]
+    | LBRACK seq_literal_inner RBRACK seq_literal  // [1][]
     ;
 
-seq_literal_term ::= identifier
-    | all_literals
-    ;
 
 seq_literal_inner ::= all_literals
-    | identifier
-    | identifier COMMA seq_literal_inner
     | all_literals COMMA seq_literal_inner
     ;
 
@@ -241,8 +238,7 @@ seq_concat ::= seq_concat_term COLONCOLON seq_concat_term
     | seq_concat_term COLONCOLON seq_concat
     ;
 
-seq_concat_term ::= identifier
-    | all_literals
+seq_concat_term ::= all_literals
     | seq_literal
     | dict_literal
     ;

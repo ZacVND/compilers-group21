@@ -18,6 +18,6 @@ main {
   else 
      nelist := newlist - newlist[0];
   fi
-  
+
   return;
 };
