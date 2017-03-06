@@ -188,6 +188,7 @@ all_literals ::= number_literals
     | CHARACTER_LITERAL
     | BOOLEAN_LITERAL
     | identifier
+    | NULL_LITERAL
     ;
 
 number_literals ::= INTEGER_LITERAL
