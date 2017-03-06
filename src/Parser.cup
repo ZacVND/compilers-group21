@@ -221,13 +221,16 @@ dict_literal_inner ::= all_literals COLON all_literals
     ;
 
 seq_literal ::= LBRACK seq_literal_inner RBRACK
-    | LBRACK all_literals COLON seq_literal_term RBRACK
-    | LBRACK all_literals COLON RBRACK
-    | LBRACK COLON all_literals RBRACK
+    | LBRACK number_literals COLON number_literals RBRACK
+    | LBRACK number_literals COLON RBRACK
+    | LBRACK COLON number_literals RBRACK
     | identifier seq_literal
     | LBRACK RBRACK
     | LBRACK RBRACK seq_literal // [][]
     | LBRACK seq_literal_inner RBRACK seq_literal  // [1][]
+    | LBRACK number_literals COLON number_literals RBRACK seq_literal
+    | LBRACK number_literals COLON RBRACK seq_literal
+    | LBRACK COLON number_literals RBRACK seq_literal
     ;
 
 
