@@ -76,7 +76,7 @@ terminal PLUS, MINUS, MULT, DIV, EXP;
 
 // Non Terminals
 // Literals
-non terminal all_literals, number_literals, dict_literal, seq_literal;
+non terminal all_literals, number_literals, pos_number_literals, dict_literal, seq_literal;
 non terminal dict_literal_inner, seq_literal_term, seq_literal_inner;
 
 // Types
@@ -183,7 +183,6 @@ term ::= all_literals
     ;
 
 all_literals ::= number_literals
-    | MINUS number_literals
     | STRING_LITERAL
     | CHARACTER_LITERAL
     | BOOLEAN_LITERAL
@@ -191,7 +190,11 @@ all_literals ::= number_literals
     | NULL_LITERAL
     ;
 
-number_literals ::= INTEGER_LITERAL
+number_literals ::= pos_number_literals
+    | MINUS pos_number_literals
+    ;
+
+pos_number_literals ::= INTEGER_LITERAL
     | FLOATING_POINT_LITERAL
     | RATIONAL_LITERAL
     ;

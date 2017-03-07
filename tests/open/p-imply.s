@@ -3,6 +3,4 @@ main {
   b:bool := F;
   c:bool := a => b;
   print c;
-
-  c:bool := a = null;
 };

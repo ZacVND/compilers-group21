@@ -2,7 +2,7 @@ fdef foo( pos : int ) {
 	if (pos = -1) then
 		return 0;
 	else 
-        return 1;
+		return 1;
 	fi	
 	return ?T?add( ?T?foo( pos-1 ), ?T?foo( pos-2 ) );
 } ;

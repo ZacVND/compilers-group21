@@ -1,4 +1,4 @@
 main {
-	x : dict<int,int> := { }; 
+	x : dict<int,int> := { };
 	return;
 };
