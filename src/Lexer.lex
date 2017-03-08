@@ -51,8 +51,24 @@ WhiteSpace = {LineTerminator} | [ \t\f]
 /* comments */
 Comment = {MultiLineComment} | {SingleLineComment}
 
-MultiLineComment = "/#" ({MultiLineComment}|.)*? "#/" | "/#" "#"+ "/"
-SingleLineComment = "#" .*? {LineTerminator}?
+%x MultiLineComment
+%%
+"/#" {
+  yy_push_state(MultiLineComment);
+}
+<MultiLineComment>{
+  "#/" {
+    yy_pop_state();
+  }
+
+  "/#" {
+    yy_push_state(MultiLineComment);
+  }
+}
+%%
+
+/*MultiLineComment = "/#" ({MultiLineComment}|.)*? "#/" | "/#" "#"+ "/"*/
+SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
 
 /* identifiers */
 Identifier = [a-zA-Z][a-zA-Z0-9_]*
