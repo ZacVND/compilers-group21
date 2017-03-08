@@ -3,7 +3,7 @@ main {
 	loop
 		if (x != x) then
 			break;
-    else x != 0;
+        else x != 0;
 		fi
 	pool
 };
