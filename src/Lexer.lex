@@ -49,8 +49,9 @@ InputCharacter = [^\r\n]
 WhiteSpace = {LineTerminator} | [ \t\f]
 
 /* comments */
-Comment = {MultiLineComment} | {SingleLineComment}
-
+//Comment = {MultiLineComment} | {SingleLineComment}
+Comment = #.*\n | \/#([^#]|#[^\/]|\n)*#\/
+/*
 %x MultiLineComment
 %%
 "/#" {
@@ -65,10 +66,10 @@ Comment = {MultiLineComment} | {SingleLineComment}
     yy_push_state(MultiLineComment);
   }
 }
-%%
-
-/*MultiLineComment = "/#" ({MultiLineComment}|.)*? "#/" | "/#" "#"+ "/"*/
-SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
+%%*/
+/*
+MultiLineComment = #.*\n | \/#([^#]|#[^\/]|\n)*#\/
+SingleLineComment = "#" {InputCharacter}* {LineTerminator}?*/
 
 /* identifiers */
 Identifier = [a-zA-Z][a-zA-Z0-9_]*
