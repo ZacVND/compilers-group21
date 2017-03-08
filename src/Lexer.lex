@@ -51,8 +51,8 @@ WhiteSpace = {LineTerminator} | [ \t\f]
 /* comments */
 Comment = {MultiLineComment} | {SingleLineComment}
 
-MultiLineComment = "/#" [^#] ~"#/" | "/#" "#"+ "/"
-SingleLineComment = "#" {InputCharacter}* {LineTerminator}?
+MultiLineComment = "/#" ({MultiLineComment}|.)*? "#/" | "/#" "#"+ "/"
+SingleLineComment = "#" .*? {LineTerminator}?
 
 /* identifiers */
 Identifier = [a-zA-Z][a-zA-Z0-9_]*
