@@ -1,7 +1,0 @@
-fdef x () {
-
-};
-
-main {
-    return;
-};

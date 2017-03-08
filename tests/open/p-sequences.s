@@ -6,7 +6,7 @@ s2:string := "hello";
 
 main {
 
-  newlist:seq<top> := l1 :: l2;
+  fnewlist:seq<top> := l1 :: l2;
   anotherlist:seq<top> := [s1] :: [s2] :: newlist;
   thirdlist:seq<top> := l2[:-2] :: l2[3:];
 
@@ -16,8 +16,8 @@ main {
   if (newlist.len <= anotherlist.len) then
      newlist := newlist + anotherlist[0];
   else 
-     newlist := newlist - newlist[0];
+     nelist := newlist - newlist[0];
   fi
-  
+
   return;
 };
