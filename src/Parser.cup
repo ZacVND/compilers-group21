@@ -90,10 +90,10 @@ non terminal program, main;
 non terminal conditional_statement, boolean_statement, loop_inner;
 
 // Atoms
-non terminal stmt, expr_list, expr, term;
+non terminal stmt, main_stmt, func_stmt, expr_list, expr, term;
 
 // User definitions and functions
-non terminal typedef, funcdef, funcdef_inner, func_stmt, function_call;
+non terminal typedef, funcdef, funcdef_inner, function_call;
 non terminal function_inner, typedef_inner;
 
 // Precedences
@@ -103,22 +103,6 @@ precedence left EQ, LT, GT, LEQ, GEQ, NEQ;
 precedence left AND, OR, IMPLICATION;
 
 program ::= main function_inner | function_inner main | function_inner main function_inner | main;
-
-stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
-    | identifier COLON all_types SEMICOLON //declaration
-    | identifier COLON all_types ASSIGN expr_list SEMICOLON //initialisation
-    | function_call SEMICOLON //function calls
-    | READ identifier SEMICOLON //input
-    | PRINT expr SEMICOLON //output
-    | ALIAS all_types all_types SEMICOLON //alias
-    | typedef
-    | funcdef
-    | conditional_statement //conditional - if then, if then else
-    | LOOP loop_inner POOL
-    | RETURN expr SEMICOLON
-    | RETURN SEMICOLON
-    ;
-
 
 func_stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
     | identifier COLON all_types SEMICOLON //declaration
@@ -130,6 +114,15 @@ func_stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
     | LOOP loop_inner POOL
     | RETURN expr SEMICOLON
     | RETURN SEMICOLON
+    ;
+
+main_stmt ::= ALIAS all_types all_types SEMICOLON //alias
+    | typedef
+    | funcdef
+    ;
+
+stmt ::= func_stmt
+    | main_stmt
     ;
 
 main ::= MAIN LBRACE function_inner RBRACE SEMICOLON
