@@ -90,10 +90,10 @@ non terminal program, main;
 non terminal conditional_statement, boolean_statement, loop_inner;
 
 // Atoms
-non terminal stmt, main_stmt, func_stmt, expr_list, expr, term;
+non terminal stmt, expr_list, expr, term;
 
 // User definitions and functions
-non terminal typedef, funcdef, funcdef_inner, function_call;
+non terminal typedef, funcdef, function_call;
 non terminal function_inner, typedef_inner;
 
 // Precedences
@@ -104,31 +104,25 @@ precedence left AND, OR, IMPLICATION;
 
 program ::= main function_inner | function_inner main | function_inner main function_inner | main;
 
-func_stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
+stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
     | identifier COLON all_types SEMICOLON //declaration
     | identifier COLON all_types ASSIGN expr_list SEMICOLON //initialisation
     | function_call SEMICOLON //function calls
     | READ identifier SEMICOLON //input
     | PRINT expr SEMICOLON //output
+    | ALIAS all_types all_types SEMICOLON //alias
+    | typedef
+    | funcdef
     | conditional_statement //conditional - if then, if then else
     | LOOP loop_inner POOL
     | RETURN expr SEMICOLON
     | RETURN SEMICOLON
     ;
 
-main_stmt ::= ALIAS all_types all_types SEMICOLON //alias
-    | typedef
-    | funcdef
-    ;
-
-stmt ::= func_stmt
-    | main_stmt
-    ;
-
 main ::= MAIN LBRACE function_inner RBRACE SEMICOLON
     ;
 
-loop_inner ::= funcdef_inner
+loop_inner ::= function_inner
     | BREAK SEMICOLON
     | BREAK INTEGER_LITERAL SEMICOLON
     ;
@@ -145,18 +139,15 @@ typedef_inner ::= identifier COLON all_types
     | identifier COLON all_types COMMA typedef_inner
     ;
 
-funcdef ::= FDEF identifier LPAREN typedef_inner RPAREN LBRACE funcdef_inner RBRACE SEMICOLON
-    | FDEF identifier LPAREN typedef_inner RPAREN LBRACE funcdef_inner RBRACE COLON all_types SEMICOLON
-    | FDEF identifier LPAREN RPAREN LBRACE funcdef_inner RBRACE COLON all_types SEMICOLON
-    | FDEF identifier LPAREN RPAREN LBRACE funcdef_inner RBRACE SEMICOLON
+funcdef ::= FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE SEMICOLON
+    | FDEF identifier LPAREN typedef_inner RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
+    | FDEF identifier LPAREN RPAREN LBRACE function_inner RBRACE COLON all_types SEMICOLON
+    | FDEF identifier LPAREN RPAREN LBRACE function_inner RBRACE SEMICOLON
     | FDEF identifier LPAREN typedef_inner RPAREN LBRACE RBRACE SEMICOLON
     | FDEF identifier LPAREN typedef_inner RPAREN LBRACE RBRACE COLON all_types SEMICOLON
     | FDEF identifier LPAREN RPAREN LBRACE RBRACE SEMICOLON
     | FDEF identifier LPAREN RPAREN LBRACE RBRACE COLON all_types SEMICOLON
     ;
-
-funcdef_inner ::= func_stmt
-    | funcdef_inner func_stmt
 
 function_call ::= QMARK expr QMARK IDENTIFIER LPAREN expr_list RPAREN
     ;
@@ -272,3 +263,4 @@ seq_concat_term ::= all_literals
 identifier ::= IDENTIFIER
     | IDENTIFIER DOT identifier
     ;
+
