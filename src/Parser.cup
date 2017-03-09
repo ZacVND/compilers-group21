@@ -163,7 +163,7 @@ funcdef ::= FDEF identifier LPAREN typedef_inner RPAREN LBRACE funcdef_inner RBR
     ;
 
 funcdef_inner ::= func_stmt
-    | function_inner func_stmt
+    | funcdef_inner func_stmt
 
 function_call ::= QMARK expr QMARK IDENTIFIER LPAREN expr_list RPAREN
     ;
