@@ -121,7 +121,6 @@ func_stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
     ;
 
 main_stmt ::= ALIAS all_types all_types SEMICOLON //alias
-    | ALIAS all_types identifier SEMICOLON //alias
     | typedef
     | funcdef
     ;
