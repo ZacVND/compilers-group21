@@ -11,4 +11,5 @@ fdef fibonacci( pos : int ) {
 		return 1;
 	fi	
 	return?T?fibonacci(pos-1) + ?T?fibonacci(pos-2);
+	d[k] := 3 + 3;
 } : int ;
