@@ -91,15 +91,15 @@ SingleCharacter = [^\r\n\'\\]
   "return"                        { return symbol("return", sym.RETURN); }
 
   /* Keywords for Datatypes*/
-  "top"                         { return symbol("top", sym.TOP); }
-  "int"                         { return symbol("int", sym.INT); }
-  "rat"                         { return symbol("rat", sym.RAT); }
-  "float"                       { return symbol("float", sym.FLOAT); }
-  "boolean"                     { return symbol("bool", sym.BOOLEAN); }
-  "string"                        { return symbol("string", sym.STRING); }
-  "char"                        { return symbol("char", sym.CHAR); }
-  "seq"                         { return symbol("seq", sym.SEQ); }
-  "dict"                        { return symbol("dict", sym.DICT); }
+  "top"                         { return symbol("top", sym.TYPE, new Integer(sym.TOP)); }
+  "int"                         { return symbol("int", sym.TYPE, new Integer(sym.INT)); }
+  "rat"                         { return symbol("rat", sym.TYPE, new Integer(sym.RAT)); }
+  "float"                       { return symbol("float", sym.TYPE, new Integer(sym.FLOAT)); }
+  "boolean"                     { return symbol("bool", sym.TYPE, new Integer(sym.BOOLEAN)); }
+  "string"                        { return symbol("string", sym.TYPE, new Integer(sym.STRING)); }
+  "char"                        { return symbol("char", sym.TYPE, new Integer(sym.CHAR)); }
+  "seq"                         { return symbol("seq", sym.TYPE, new Integer(sym.SEQ)); }
+  "dict"                        { return symbol("dict", sym.TYPE, new Integer(sym.DICT)); }
 
 
   /* LITERALS */
@@ -175,7 +175,7 @@ SingleCharacter = [^\r\n\'\\]
   \'                             { yybegin(CHAR); }
 
   /* identifiers */
-  {Identifier}                   { return symbol("Identifier", sym.IDENTIFIER, yytext()); }
+  {Identifier}                   { return symbol("Identifier", sym.TYPE, new Integer(sym.IDENTIFIER), yytext()); }
 
   /* comments */
   {Comment}                      { /* ignore */ }

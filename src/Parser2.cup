@@ -1,0 +1,279 @@
+import java_cup.runtime.*;
+import java.util.*;
+import java.io.*;
+import java_cup.runtime.*;
+import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
+
+parser code {:
+  public boolean syntaxErrors;
+
+  Lexer lexer;
+
+  public Parser(Lexer lex, ComplexSymbolFactory sf) {
+    super(lex,sf);
+    lexer = lex;
+  }
+
+  public void syntax_error(Symbol current_token) {
+    syntaxErrors = true;
+    report_error("Syntax error at line " + (current_token.left+1) + ", column "
+    + current_token.right + ": ", null);
+  }
+
+:};
+
+terminal IN;
+
+// IO
+terminal READ, PRINT;
+
+// Function
+terminal QMARK;
+terminal RETURN;
+
+// Conditional Statements
+terminal LOOP, POOL;
+terminal IF, THEN, FI;
+terminal BREAK, ELSE;  // Conditional Statements - Control
+
+// Logical Operators
+terminal EQ, GT, LT, LEQ, GEQ, NEQ;
+terminal NOT, AND, OR, IMPLICATION;
+
+// Types
+terminal INT, FLOAT, RAT;
+terminal SEQ, DICT;
+terminal BOOLEAN;
+terminal CHAR;
+terminal STRING;
+terminal TOP;
+
+// Definitions
+terminal TDEF, FDEF; // Define type & functions
+terminal ALIAS;
+terminal MAIN;
+terminal IDENTIFIER;
+terminal ASSIGN;
+
+// Literals
+terminal BOOLEAN_LITERAL;
+terminal NULL_LITERAL;
+terminal INTEGER_LITERAL, FLOATING_POINT_LITERAL, RATIONAL_LITERAL;  // Numbers
+terminal STRING_LITERAL, CHARACTER_LITERAL;  // String & Char
+
+// Separators
+terminal LPAREN, RPAREN, LBRACE, RBRACE, LBRACK, RBRACK;
+terminal SEMICOLON;
+terminal COMMA;
+terminal DOT;
+
+// Dictionary & Sequence
+terminal COLON, COLONCOLON;
+
+// Operators
+terminal PLUS, MINUS, MULT, DIV, EXP;
+
+
+// Non Terminals
+// Literals
+non terminal all_literals, number_literals, pos_number_literals, dict_literal, seq_literal;
+non terminal dict_literal_inner, seq_literal_term, seq_literal_inner;
+
+// Types
+non terminal all_types, primitive, identifier;
+
+// Sequence
+non terminal seq_concat, seq_concat_term;
+non terminal program, main;
+
+// Controls
+non terminal conditional_statement, boolean_statement, loop_inner;
+
+// Atoms
+non terminal stmt, main_stmt, func_stmt, expr_list, expr, term;
+
+// User definitions and functions
+non terminal typedef, funcdef, funcdef_inner, function_call;
+non terminal function_inner, typedef_inner;
+
+// Precedences
+precedence left ASSIGN;
+precedence left PLUS, MINUS, MULT, DIV, EXP;
+precedence left EQ, LT, GT, LEQ, GEQ, NEQ;
+precedence left AND, OR, IMPLICATION;
+
+program ::= main function_inner
+    | function_inner main
+    | function_inner main function_inner
+    | main
+    ;
+
+func_stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
+    | identifier COLON all_types SEMICOLON //declaration
+    | identifier COLON all_types ASSIGN expr_list SEMICOLON //initialisation
+    | function_call SEMICOLON //function calls
+    | READ identifier SEMICOLON //input
+    | PRINT expr SEMICOLON //output
+    | conditional_statement //conditional - if then, if then else
+    | LOOP loop_inner POOL
+    | RETURN expr SEMICOLON
+    | RETURN SEMICOLON
+    ;
+
+main_stmt ::= ALIAS all_types all_types SEMICOLON //alias
+    | typedef
+    | funcdef
+    ;
+
+stmt ::= func_stmt
+    | main_stmt
+    ;
+
+main ::= MAIN LBRACE function_inner RBRACE SEMICOLON
+    ;
+
+function_inner ::= stmt
+    | function_inner stmt
+    ;
+
+loop_inner ::= funcdef_inner
+    | BREAK SEMICOLON
+    | BREAK INTEGER_LITERAL SEMICOLON
+    ;
+
+typedef ::= TDEF identifier LBRACE typedef_inner RBRACE SEMICOLON
+    | TDEF identifier LBRACE RBRACE SEMICOLON
+    ;
+
+typedef_inner ::= identifier COLON all_types
+    | identifier COLON all_types COMMA typedef_inner
+    ;
+
+funcdef ::= FDEF identifier LPAREN typedef_inner RPAREN LBRACE funcdef_inner RBRACE SEMICOLON
+    | FDEF identifier LPAREN typedef_inner RPAREN LBRACE funcdef_inner RBRACE COLON all_types SEMICOLON
+    | FDEF identifier LPAREN RPAREN LBRACE funcdef_inner RBRACE COLON all_types SEMICOLON
+    | FDEF identifier LPAREN RPAREN LBRACE funcdef_inner RBRACE SEMICOLON
+    | FDEF identifier LPAREN typedef_inner RPAREN LBRACE RBRACE SEMICOLON
+    | FDEF identifier LPAREN typedef_inner RPAREN LBRACE RBRACE COLON all_types SEMICOLON
+    | FDEF identifier LPAREN RPAREN LBRACE RBRACE SEMICOLON
+    | FDEF identifier LPAREN RPAREN LBRACE RBRACE COLON all_types SEMICOLON
+    ;
+
+funcdef_inner ::= func_stmt
+    | funcdef_inner func_stmt
+    ;
+
+function_call ::= QMARK expr QMARK IDENTIFIER LPAREN expr_list RPAREN
+    ;
+
+conditional_statement ::= IF LPAREN boolean_statement RPAREN THEN loop_inner FI
+    | IF LPAREN boolean_statement RPAREN THEN loop_inner ELSE loop_inner FI
+    ;
+
+boolean_statement ::= boolean_statement EQ boolean_statement
+    | boolean_statement LT boolean_statement
+    | boolean_statement GT boolean_statement
+    | boolean_statement LEQ boolean_statement
+    | boolean_statement GEQ boolean_statement
+    | boolean_statement NEQ boolean_statement
+    | boolean_statement AND boolean_statement
+    | boolean_statement OR boolean_statement
+    | boolean_statement IMPLICATION boolean_statement
+    | expr IN expr
+    | NOT boolean_statement
+    | expr
+    ;
+
+expr_list ::= boolean_statement
+    | boolean_statement COMMA expr_list
+    ;
+
+expr ::= term
+    | LPAREN expr RPAREN
+    | seq_concat
+    | expr PLUS expr
+    | expr MULT expr
+    | expr DIV expr
+    | expr EXP expr
+    | expr MINUS expr
+    ;
+
+term ::= all_literals
+    | dict_literal
+    | seq_literal
+    | function_call
+    ;
+
+all_literals ::= number_literals
+    | STRING_LITERAL
+    | CHARACTER_LITERAL
+    | BOOLEAN_LITERAL
+    | identifier
+    | NULL_LITERAL
+    ;
+
+number_literals ::= pos_number_literals
+    | MINUS pos_number_literals
+    ;
+
+pos_number_literals ::= INTEGER_LITERAL
+    | FLOATING_POINT_LITERAL
+    | RATIONAL_LITERAL
+    ;
+
+all_types ::= DICT LT all_types COMMA all_types GT  // Dict Type
+    | SEQ LT all_types GT  // Seq Type
+    | primitive
+    | identifier
+    | TOP
+    ;
+
+primitive ::= CHAR
+    | STRING
+    | INT
+    | FLOAT
+    | RAT
+    | BOOLEAN
+    ;
+
+dict_literal ::= LBRACE dict_literal_inner RBRACE
+    | LBRACE RBRACE
+    ;
+
+
+dict_literal_inner ::= expr COLON expr
+    | expr COLON expr COMMA dict_literal_inner
+    ;
+
+seq_literal ::= LBRACK seq_literal_inner RBRACK
+    | LBRACK all_literals COLON all_literals RBRACK
+    | LBRACK all_literals COLON RBRACK
+    | LBRACK COLON all_literals RBRACK
+    | LBRACK COLON RBRACK // [:]
+    | identifier seq_literal
+    | LBRACK RBRACK
+    | LBRACK RBRACK seq_literal // [][]
+    | LBRACK seq_literal_inner RBRACK seq_literal  // [1][]
+    | LBRACK all_literals COLON all_literals RBRACK seq_literal
+    | LBRACK all_literals COLON RBRACK seq_literal
+    | LBRACK COLON all_literals RBRACK seq_literal
+    | LBRACK COLON RBRACK seq_literal
+    ;
+
+
+seq_literal_inner ::= expr
+    | expr COMMA seq_literal_inner
+    ;
+
+seq_concat ::= seq_concat_term COLONCOLON seq_concat_term
+    | seq_concat_term COLONCOLON seq_concat
+    ;
+
+seq_concat_term ::= all_literals
+    | seq_literal
+    | dict_literal
+    ;
+
+identifier ::= IDENTIFIER
+    | IDENTIFIER DOT identifier
+    ;
