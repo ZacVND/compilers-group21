@@ -200,6 +200,7 @@ expr ::= term
 
 term ::= all_literals
     | dict_literal
+    | dict_literal DOT IDENTIFIER
     | seq_literal
     | seq_literal DOT IDENTIFIER //e.g. {3,4,5}.len
     | function_call
