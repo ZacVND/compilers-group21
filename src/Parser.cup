@@ -79,7 +79,7 @@ terminal LEN;
 // Non Terminals
 // Literals
 non terminal all_literals, number_literals, pos_number_literals, dict_literal, seq_literal;
-non terminal dict_literal_inner, seq_literal_term, seq_literal_inner;
+non terminal dict_literal_inner, seq_literal_inner;
 
 // Types
 non terminal all_types, primitive, identifier;
@@ -208,7 +208,7 @@ term ::= all_literals
     ;
 
 seq_len ::= seq_literal DOT LEN
-    | identifier DOT LEN
+    | IDENTIFIER DOT LEN
     ;
 
 all_literals ::= number_literals
