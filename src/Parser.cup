@@ -208,7 +208,6 @@ term ::= all_literals
     ;
 
 seq_len ::= seq_literal DOT LEN
-    | IDENTIFIER DOT LEN
     ;
 
 all_literals ::= number_literals
