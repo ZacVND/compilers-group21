@@ -110,6 +110,7 @@ program ::= main function_inner
 func_stmt ::= identifier ASSIGN expr_list SEMICOLON //assignment
     | identifier COLON all_types SEMICOLON //declaration
     | identifier COLON all_types ASSIGN expr_list SEMICOLON //initialisation
+    | identifier LBRACK all_literals RBRACK ASSIGN expr_list SEMICOLON  // d[k]
     | function_call SEMICOLON //function calls
     | READ identifier SEMICOLON //input
     | PRINT expr SEMICOLON //output
