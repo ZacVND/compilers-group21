@@ -101,8 +101,6 @@ SingleCharacter = [^\r\n\'\\]
   "seq"                         { return symbol("seq", sym.SEQ); }
   "dict"                        { return symbol("dict", sym.DICT); }
 
-  "len"                        { return symbol("len", sym.LEN); }
-
   /* LITERALS */
 
   /* boolean literals */

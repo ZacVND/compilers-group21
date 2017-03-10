@@ -73,9 +73,6 @@ terminal COLON, COLONCOLON;
 // Operators
 terminal PLUS, MINUS, MULT, DIV, EXP;
 
-terminal LEN;
-
-
 // Non Terminals
 // Literals
 non terminal all_literals, number_literals, pos_number_literals, dict_literal, seq_literal;
@@ -92,7 +89,7 @@ non terminal program, main;
 non terminal conditional_statement, boolean_statement, loop_inner;
 
 // Atoms
-non terminal stmt, main_stmt, func_stmt, expr_list, expr, term, seq_len;
+non terminal stmt, main_stmt, func_stmt, expr_list, expr, term;
 
 // User definitions and functions
 non terminal typedef, funcdef, funcdef_inner, function_call;
@@ -204,10 +201,6 @@ term ::= all_literals
     | dict_literal
     | seq_literal
     | function_call
-    | seq_len
-    ;
-
-seq_len ::= seq_literal DOT LEN
     ;
 
 all_literals ::= number_literals
